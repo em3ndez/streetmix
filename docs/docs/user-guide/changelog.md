@@ -1,9 +1,169 @@
 ---
 sidebar_label: Changelog
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # What's new in Streetmix?
+
+## May 9, 2024
+
+### 🐛 Bug fixes
+
+- Fixed a database issue that can prevent logins from a Google e-mail address, in rare cases.
+
+## April 26, 2024
+
+### 🐛 Bug fixes
+
+- Fixed a bug that caused crosswalks, which are experimental, and one other secret item to be available.
+
+## April 8, 2024
+
+### 🎨 Improvements
+
+- Improved keyboard navigation to several UI elements.
+
+## March 22, 2024
+
+Happy 2024! This week, we've rolled out a very big change behind the scenes: **Streetmix now uses metric units internally.** This is the culmination of a long process that took several years of careful planning and a over a month of focused implementation effort. Previously, Streetmix used U.S. customary units (also known, imprecisely, as "imperial"), and then converted those units to metric for users that needed it. This proved difficult to work with as Streetmix use expanded globally.
+
+This is an internal change, so **you very likely do not need to take any action with your existing streets.** If you're using imperial (U.S. customary) units, your streets will have the same measurements as before.
+
+However, with this update, we have one important change that _can_ affect you: **when converting streets between metric and imperial units, the conversion rate is now precise instead of approximate.** Previously, we used a conversation rate of `1 ft = 1 m × 0.3`. This approximation is used in many real-world scenarios, for instance, the AASHTO "Green Book" would define a 3.0-m lane width as equivalent to 10-ft in U.S. customary units. But, especially for wide streets and large aggregations of street elements, this rounding error compounds: a 400-ft street would be converted to 120 m, when it is closer to 122 m&mdash;a loss of nearly 2 m!
+
+As a result, moving forward, the conversion rate is now the more precise `1 ft = 1 m × 0.3048`. This means that if a street switches its unit of measurement, you will need to manually fine tune your lane and street widths to have round numbers.
+
+Internally, rules such as "minimum width" are now defined separately in each system of measurement, rather than converted from imperial (U.S. customary) units. Because of this, you might find that after switching a street's unit of measurement, a previously-valid street might express new warnings. Fine tuning your measurements after units conversion should resolve these.
+
+We hope this change proceeds smoothly for everyone, and if you have any thoughts or feedback, please let us know in [Discord](https://strt.mx/discord)!
+
+### 🎨 Improvements
+
+- Updates to French translations.
+
+### 🐛 Bug fixes
+
+- Fixed new streets having a broken bike lane variant.
+- Fixed colored asphalt icons not having different colors.
+
+## November 25, 2023
+
+### 🎨 Improvements
+
+- Updates to Korean translations. Thanks to our translator, Jaeheon Kim, and our reviewer, Hanbyul Jo!
+
+## June 20, 2023
+
+### ✨ New features
+
+**You can now set a display name for your account!** A display name is a more descriptive way to identify and personalize your account, and it's now the way you appear to other users on Streetmix, if you have one. You'll still have a pre-set username, which is what the system uses to identify you (for instance, in links to your street). In the future, you'll also be able to change your username, also!
+
+![Display name in the UI](/img/changelog/display-name.png)
+
+To get started, click on your profile image on the top right, then select **Settings**. Make sure the **Profile** settings tab is selected, then under **Display name**, tap the **Edit** button. You can change your display name as often as you'd like, so feel free to try something new!
+
+## April 22, 2023
+
+### ✨ New features
+
+- **Added "Share using Mastodon" option.** Birdsite isn't quite dead, but elephantsite is open source and has some nice things going for it. It's worth supporting, so we're starting with some basic share functionality. When you share to Mastodon, we'll have to ask you what your Mastodon instance's domain is, since there are so many of them.
+
+You can also now find us on the Fediverse at [@streetmix@urbanists.social](https://urbanists.social/@streetmix)!
+
+## April 19, 2023
+
+### ✨ New features
+
+- **Added Indonesian support.** Thanks to Fuad Alghaffary for contributing these translations!
+
+Language support is contributed by our users around the world. If you have any feedback or want to help, [you can learn more about how to help translate Streetmix](https://docs.streetmix.net/contributing/translations/overview).
+
+## April 11, 2023
+
+### 🐛 Bug fixes
+
+- Fixed broken "Share using Facebook" functionality.
+
+## March 23, 2023
+
+### ✨ New features
+
+- **Export directly to 3DStreet!** If you've ever wanted a plan view or a 3D view of your street, then [3DStreet](https://www.3dstreet.org/) is the tool you're looking for. They have supported importing from Streetmix for a long time, and now you can also send your street directly to 3DStreet with one click from the Share menu.
+
+## November 19, 2022
+
+### 🐛 Bug fixes
+
+- Fixed a bug in Safari browsers where artwork would not be drawn unless the street was either interacted with or reloaded.
+- Fixed a bug in Safari browsers where menus would be positioned incorrectly.
+
+## November 15, 2022
+
+### ✨ New features
+
+We stealth-launched two-way cycletracks a few months ago, but this is its official announcement! We've also added a handful of new features, coming from our friends at [ITDP Africa](https://africa.itdp.org)!
+
+![New features gallery](/img/changelog/itdp-africa.png)
+
+#### Available for [Streetmix+](https://strt.mx/plus) members:
+
+- **Two-way bi-directional cycletracks.** You no longer have to put together two bike lanes together by hand! Just plop down a cycletrack _and_ get a nice painted yellow line down its middle.
+- **Mixed-use traffic lane (with bus).** Let's be real, you often get busses and cars in the same lane. Why not show that?
+- **Mixed-use traffic lane (with bicyclist).** Let's be even realer: too often, bikers are stuck on drive lanes too. But I don't think these bikers are too happy about it.
+- **Drainage channel.** It's been too long since we gave the stormwater management people some love. This is just the beginning. We know there's so much more to drainage than just a groove in a street.
+- **Elevation toggle for sidewalk.** You can now make some pedestrian areas not have a curb.
+
+### Available for all signed-in users:
+
+- **Street vendors.** Add some small-business commercial activity to your street!
+- **Compound wall.** Sometimes, buildings are located behind a wall. Like this one.
+
+## November 12, 2022
+
+### 🎮 UI improvements
+
+- **Improvements to gallery view.** Those tiny gray pixels? Gone. Thumbnails look great now!
+
+### 🎨 Improvements
+
+- Updates to Finnish and Czech translations.
+
+## October 25, 2022
+
+### 🎮 UI improvements
+
+- **The custom scale slider in the "Save as image" dialog is now 500% more useful.** We sort of stealth-released a "custom scale" feature that let you save images at 500% the original size, for when you needed super crisp magazine spreads or 10-foot wide hero banners. The problem is, we just used placeholder developer labels on it with no other explanation. It'll now tell you what size a saved image will be at in percentage terms, as well as pixel resolution and typical print dimensions. **Note: This is a Streetmix+ member feature, so if you'd like to use it, grab a [monthly membership subscription](https://strt.mx/plus) today!**
+
+## September 8, 2022
+
+### 🎮 UI improvements
+
+- **Added a new settings menu.** It doesn't do much yet, but it makes it easier to add more options in the future. It's accessible in your user menu (for signed-in users). The old settings menu is removed.
+- A new language selection menu is added where the old settings menu used to be. (It's mostly what the old settings menu did, anyway.)
+- Icons and tooltips added to various parts of the menu bar and street metadata UI (below the street name).
+
+## August 24, 2022
+
+### ✨ New features
+
+- **Added Czech and Spanish (Spain) translations.** Thanks to our translators, [Jiří Podhorecký](https://spotter.ngo) and Pau Martí Talens!
+
+### 🎨 Improvements
+
+- Updates to Finnish and Norwegian translations.
+
+## January 31, 2022
+
+### ✨ New features
+
+**Announcing Streetmix+, a [monthly membership subscription](https://strt.mx/plus) that supports us _and_ gets you access to new features.** Here's a quick summary of the new shinies that Streetmix+ members get:
+
+- **Rename street segments.** We get it: it's not a "drive lane," you want to call it an "obstacle course." But in all seriousness, a lot of people have different names for things in different parts of the world, and we could only have chosen one. Now you can choose another.
+- **Change environmental backgrounds.** Because science tells us the sky isn't really blue, that's why.
+- **Export images without watermark.** Some of you actually crop the watermark out when you publish an image from Streetmix. We see you. Our eyes are everywhere. Now you can do it with our permission.
+- **New segments:** double decker bus, microvan, and autonomous shuttles. Oh my.
+
+We'll have more to come, so head on over to [our documentation](https://strt.mx/plus) for more details and instructions for signing up.
 
 ## December 9, 2021
 
@@ -29,7 +189,7 @@ P.S. We’re still looking for someone to help us finish Korean translations, so
 
 ### 🎨 Improvements
 
-- **Fresh new look and feel for documentation!** We called all our friends last week and told them if they help us move they get free pizza and beer. Same old content, but now in a modern apartment, which also let us reorganize a little and make things more intuitive to find! Please update your links and address books. [If you'd like to contribute to documentation, let us know!](/contributing/documentation)
+- **Fresh new look and feel for documentation!** We called all our friends last week and told them if they help us move they get free pizza and beer. Same old content, but now in a modern apartment, which also let us reorganize a little and make things more intuitive to find! Please update your links and address books. [If you'd like to contribute to documentation, let us know!](https://docs.streetmix.net/contributing/documentation/)
 
 ## July 29, 2021
 

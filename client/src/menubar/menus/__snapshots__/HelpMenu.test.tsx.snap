@@ -1,0 +1,168 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HelpMenu > renders 1`] = `
+<DocumentFragment>
+  <div
+    class="menu"
+  >
+    <a>
+      <svg
+        class="menu-item-icon"
+        data-icon="info"
+        data-icon-source="test"
+      />
+      About Streetmix…
+    </a>
+    <a>
+      <svg
+        class="menu-item-icon"
+        data-icon="rocket"
+        data-icon-source="test"
+      />
+      What’s new?‎
+    </a>
+    <a
+      href="https://docs.streetmix.net/user-guide/intro"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <svg
+        class="menu-item-icon"
+        data-icon="trail-sign"
+        data-icon-source="test"
+      />
+      Guidebook
+      <svg
+        data-icon="external-link"
+        data-icon-source="test"
+      />
+    </a>
+    <div
+      class="menu-separator"
+    />
+    <a
+      href="https://cottonbureau.com/people/streetmix"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <svg
+        class="menu-item-icon"
+        data-icon="cart"
+        data-icon-source="test"
+      />
+      Store
+      <svg
+        data-icon="external-link"
+        data-icon-source="test"
+      />
+    </a>
+    <div
+      class="menu-separator"
+    />
+    <div
+      class="help-menu-shortcuts"
+    >
+      <svg
+        class="menu-item-icon"
+        data-icon="keyboard"
+        data-icon-source="test"
+      />
+      Keyboard shortcuts:
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <kbd
+                class="key"
+              >
+                Backspace
+              </kbd>
+            </td>
+            <td>
+              Remove a segment you’re pointing at
+              <br />
+              (hold 
+              <kbd
+                class="key"
+              >
+                Shift
+              </kbd>
+               to remove all)‎
+            </td>
+          </tr>
+          <tr>
+            <td
+              dir="ltr"
+            >
+              <kbd
+                class="key key-icon"
+                title="Minus"
+              >
+                <svg
+                  data-icon="minus"
+                  data-icon-source="test"
+                />
+              </kbd>
+              <kbd
+                class="key key-icon"
+                title="Plus"
+              >
+                <svg
+                  data-icon="plus"
+                  data-icon-source="test"
+                />
+              </kbd>
+            </td>
+            <td>
+              Change width of a segment you’re pointing at
+              <br />
+              (hold 
+              <kbd
+                class="key"
+              >
+                Shift
+              </kbd>
+               for more precision)‎
+            </td>
+          </tr>
+          <tr>
+            <td
+              dir="ltr"
+            >
+              <kbd
+                class="key key-icon"
+                title="Left arrow"
+              >
+                <svg
+                  data-icon="arrow-left"
+                  data-icon-source="test"
+                />
+              </kbd>
+              <kbd
+                class="key key-icon"
+                title="Right arrow"
+              >
+                <svg
+                  data-icon="arrow-right"
+                  data-icon-source="test"
+                />
+              </kbd>
+            </td>
+            <td>
+              Move around the street
+              <br />
+              (hold 
+              <kbd
+                class="key"
+              >
+                Shift
+              </kbd>
+               to jump to edges)‎
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;

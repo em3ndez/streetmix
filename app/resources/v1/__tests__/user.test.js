@@ -1,10 +1,10 @@
-/* eslint-env jest */
+import { vi } from 'vitest'
 import request from 'supertest'
-import { setupMockServer } from '../../../../test/helpers/setup-mock-server'
-import user from '../users'
+import { setupMockServer } from '../../../test/setup-mock-server'
+import * as user from '../users'
 
-jest.mock('../../../db/models')
-jest.mock('../../../../lib/logger')
+vi.mock('../../../db/models')
+vi.mock('../../../lib/logger')
 
 // mockUser is setting a mock 'sub' (which is oAuth shorthand for 'subject'),
 // so that the below tests are mock authenticated. Don't confuse this with actual user data
@@ -15,9 +15,9 @@ const mockUser = {
 const mockAdminUser = {
   sub: 'admin|789'
 }
-const jwtMock = jest.fn() // returns a user
+const jwtMock = vi.fn() // returns a user
 const mockUserMiddleware = (req, res, next) => {
-  req.user = jwtMock()
+  req.auth = jwtMock()
   next()
 }
 
@@ -76,7 +76,7 @@ describe('GET api/v1/users/:user_id', function () {
 
 describe('DELETE api/v1/users/:user_id', () => {
   const app = setupMockServer((app) => {
-    app.delete('/api/v1/users/:user_id', mockUserMiddleware, user.delete)
+    app.delete('/api/v1/users/:user_id', mockUserMiddleware, user.del)
   })
 
   it('should respond with 204 when user DELETEs their account', () => {

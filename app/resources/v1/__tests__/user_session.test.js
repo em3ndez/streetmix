@@ -1,14 +1,14 @@
-/* eslint-env jest */
+import { vi } from 'vitest'
 import request from 'supertest'
-import { setupMockServer } from '../../../../test/helpers/setup-mock-server'
-import session from '../user_session'
-jest.mock('../../../db/models')
-jest.mock('../../../../lib/logger')
+import { setupMockServer } from '../../../test/setup-mock-server'
+import * as session from '../user_session'
 
-jest.mock('../../../../lib/auth0', () => {
+vi.mock('../../../db/models')
+vi.mock('../../../lib/logger')
+vi.mock('../../../lib/auth0', () => {
   return {
     Authentication: () => ({
-      logout: jest.fn()
+      logout: vi.fn()
     })
   }
 })
@@ -16,15 +16,15 @@ jest.mock('../../../../lib/auth0', () => {
 const mockUser = {
   sub: 'foo|123'
 }
-const jwtMock = jest.fn() // returns a user
+const jwtMock = vi.fn() // returns a user
 const mockUserMiddleware = (req, res, next) => {
-  req.user = jwtMock()
+  req.auth = jwtMock()
   next()
 }
 
 describe('DELETE api/v1/users/:user_id', function () {
   const app = setupMockServer((app) => {
-    app.delete('/api/v1/users/:user_id', mockUserMiddleware, session.delete)
+    app.delete('/api/v1/users/:user_id', mockUserMiddleware, session.del)
   })
 
   it('should respond with 204 No content when user signs out', function () {

@@ -1,0 +1,10 @@
+.menu-bar .menu-sign-in {
+  margin-left: 0.5em;
+  margin-right: 0.1em;
+  padding: 0.5em 1em;
+
+  [dir="rtl"] & {
+    margin-left: 0.1em;
+    margin-right: 0.5em;
+  }
+}

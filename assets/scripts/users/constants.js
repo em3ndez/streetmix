@@ -1,2 +1,0 @@
-export const SETTINGS_UNITS_IMPERIAL = 1
-export const SETTINGS_UNITS_METRIC = 2

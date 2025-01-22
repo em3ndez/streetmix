@@ -16,6 +16,9 @@ npm-debug.log*
 
 # Ignore built assets
 build
+# Current parcel cache
+.parcel-cache
+# Legacy parcel-bundler cache
 .cache
 
 .env
@@ -30,4 +33,10 @@ newrelic_agent.log
 coverage
 
 # Ignore test artifacts
+# https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests#Asset-Files
+cypress/downloads
 cypress/screenshots
+cypress/videos
+
+# Sentry Auth Token
+.sentryclirc

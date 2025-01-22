@@ -1,3 +1,3 @@
-const { generateRandomBallotFetch } = require('../resources/v1/votes')
+import { generateRandomBallotFetch } from '../resources/v1/votes.js'
 
-exports.get = generateRandomBallotFetch({ redirect: true })
+export const get = generateRandomBallotFetch({ redirect: true })

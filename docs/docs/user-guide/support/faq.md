@@ -26,7 +26,7 @@ When you reuse or republish Streetmix content, you should include the following 
 
 - That you created this content with Streetmix
 - That the content is licensed under Creative Commons (or the AGPL license, if the reproduction includes code)
-- Include a link to Streetmix (<https://streetmix.net/>)
+- Include a link to Streetmix ([https://streetmix.net/](https://streetmix.net/))
 
 We are flexible with attribution. You may be in a situation where you're not able to include all or some of those things. That's okay! But you may not _choose_ not to provide attribution. This is theft. Please use your best judgment about what form of attribution is viable for you.
 
@@ -34,13 +34,11 @@ We are flexible with attribution. You may be in a situation where you're not abl
 
 You sure can. If you are technically inclined, please refer to the [project repository README](https://github.com/streetmix/streetmix/blob/main/README.md) for installation steps.
 
-If you are looking for someone to set up a whitelabeled instance of Streetmix, we can help! Shoot us an email to <hello@streetmix.net> and let's chat.
+If you are looking for someone to set up a whitelabeled instance of Streetmix, we can help! Shoot us an email to hello@streetmix.net and let's chat.
 
 ## Does Streetmix support Internet Explorer? {#internet-explorer}
 
-Our unique interface means Streetmix is designed with the most recent web technology in mind. We do not support the Internet Explorer browser, and we are deprecating support for Internet Explorer 11 in favor of the newer [Microsoft Edge browser](https://www.microsoft.com/en-us/windows/microsoft-edge).
-
-We also support the common "evergreen" browsers [Chrome, Firefox, and Safari](http://browsehappy.com/).
+Our unique interface means Streetmix is designed with the most recent web technology in mind. We chose not to support Internet Explorer early on, and this browser has reached the end of its official support from Microsoft in June 2022. If you are on a Windows device please use the [Microsoft Edge browser](https://www.microsoft.com/en-us/windows/microsoft-edge) instead, or one of the common "evergreen" browsers [Chrome, Firefox, and Safari](https://browsehappy.com/).
 
 ## How do you add setback lines or curb-to-curb widths?
 

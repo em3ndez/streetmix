@@ -4,15 +4,7 @@
     "text": "User",
     "value": "USER",
     "flags": {
-      "ANALYTICS": true,
-      "SEGMENT_AV": true,
-      "SEGMENT_BRT": true,
-      "SEGMENT_CAFE_SEATING": true,
-      "SEGMENT_CONSTRUCTION": true,
-      "SEGMENT_KRZ": true,
-      "SEGMENT_MAGIC_CARPET": true,
-      "SEGMENT_PED_LANES": true,
-      "SEGMENT_UTILITIES": true
+      "VARIANT_TWOWAY_BIKES": true
     }
   },
   "ADMIN": {
@@ -20,7 +12,9 @@
     "text": "Administrator",
     "value": "ADMIN",
     "flags": {
-      "LOCALES_LEVEL_1": true
+      "LOCALES_LEVEL_1": true,
+      "COLOR_MODE_TOGGLE": true,
+      "STREETMETER_EXPORT": true
     }
   },
   "BETA_TESTER": {
@@ -28,12 +22,34 @@
     "text": "Beta tester",
     "value": "BETA_TESTER",
     "flags": {
-      "ENVIRONMENT_EDITOR": true,
       "LOCALES_LEVEL_1": true,
-      "SEGMENT_AV_SHUTTLE": true,
-      "SEGMENT_DOUBLE_DECKER_BUS": true,
-      "SEGMENT_MICROVAN": true,
-      "CUSTOM_SEGMENT_LABELS": true
+      "ELEVATION_CONTROLS_UNLOCKED": true,
+      "SEGMENT_CROSSWALK": true,
+      "SEGMENT_DRAINAGE_CHANNEL_UNLOCKED": true,
+      "VARIANT_TWOWAY_BIKES_UNLOCKED": true,
+      "VARIANT_MIXED_DRIVE_LANES_1": true,
+      "VARIANT_MIXED_DRIVE_LANES_2": true,
+      "COLOR_MODE_TOGGLE": true
+    }
+  },
+  "ITDP": {
+    "key": "itdp",
+    "text": "ITDP user",
+    "value": "ITDP",
+    "flags": {
+      "ELEVATION_CONTROLS_UNLOCKED": true,
+      "SEGMENT_DRAINAGE_CHANNEL_UNLOCKED": true,
+      "VARIANT_TWOWAY_BIKES_UNLOCKED": true,
+      "VARIANT_MIXED_DRIVE_LANES_1": true,
+      "VARIANT_MIXED_DRIVE_LANES_2": true
+    }
+  },
+  "SPACESCAPE": {
+    "key": "spacescape",
+    "text": "Spacescape user",
+    "value": "spacescape",
+    "flags": {
+      "STREETMETER_EXPORT": true
     }
   },
   "TRANSLATOR": {
@@ -49,13 +65,7 @@
     "text": "Subscriber tier 1",
     "value": "SUBSCRIBER_1",
     "flags": {
-      "ENVIRONMENT_EDITOR": true,
-      "SEGMENT_AV_SHUTTLE": true,
-      "SEGMENT_DOUBLE_DECKER_BUS": true,
-      "SEGMENT_MICROVAN": true,
-      "CUSTOM_SEGMENT_LABELS": true,
-      "SAVE_AS_IMAGE_CUSTOM_DPI": true,
-      "EXPORT_WATERMARK": true
+      "SAVE_AS_IMAGE_CUSTOM_DPI": true
     }
   },
   "SUBSCRIBER_2": {

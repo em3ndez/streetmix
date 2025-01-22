@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Checkbox > renders default snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="checkbox-item"
+  >
+    <input
+      id=":r0:"
+      type="checkbox"
+      value=""
+    />
+    <label
+      for=":r0:"
+    >
+      foo
+    </label>
+    <svg
+      data-icon="check"
+      data-icon-source="test"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox > renders snapshot with all props 1`] = `
+<DocumentFragment>
+  <div
+    class="checkbox-item custom-classname"
+    style="color: blue;"
+  >
+    <input
+      checked=""
+      disabled=""
+      id=":r1:"
+      type="checkbox"
+      value="bar"
+    />
+    <label
+      for=":r1:"
+    >
+      foo
+    </label>
+    <svg
+      data-icon="check"
+      data-icon-source="test"
+    />
+  </div>
+</DocumentFragment>
+`;

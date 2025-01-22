@@ -1,12 +1,12 @@
-/* eslint-env jest */
+import { vi } from 'vitest'
 import request from 'supertest'
 import cloudinary from 'cloudinary'
-import { setupMockServer } from '../../../../test/helpers/setup-mock-server'
-import images from '../street_images'
+import { setupMockServer } from '../../../test/setup-mock-server'
+import * as images from '../street_images'
 
-jest.mock('../../../db/models')
-jest.mock('../../../../lib/logger')
-jest.mock('cloudinary')
+vi.mock('../../../db/models')
+vi.mock('../../../lib/logger')
+vi.mock('cloudinary')
 
 const street = {
   status: 'ACTIVE',
@@ -24,22 +24,22 @@ const mockAltUser = {
   sub: 'bar|456'
 }
 
-const jwtMock = jest.fn() // returns a user
+const jwtMock = vi.fn() // returns a user
 const mockUserMiddleware = (req, res, next) => {
-  req.user = jwtMock()
+  req.auth = jwtMock()
   next()
 }
 
-describe('POST api/v1/streets/images/:street_id', () => {
+describe('POST api/v1/streets/:street_id/image', () => {
   const app = setupMockServer((app) => {
     app.post(
-      '/api/v1/streets/images/:street_id',
+      '/api/v1/streets/:street_id/image',
       mockUserMiddleware,
       images.post
     )
   }, 'street_images')
   const details = { image: 'foo', event: 'TEST' }
-  JSON.parse = jest.fn().mockReturnValue(details)
+  JSON.parse = vi.fn().mockReturnValue(details)
 
   cloudinary.v2.uploader.upload.mockResolvedValue('foo')
 
@@ -47,7 +47,7 @@ describe('POST api/v1/streets/images/:street_id', () => {
     cloudinary.v2.api.resource.mockResolvedValueOnce('baz')
     jwtMock.mockReturnValueOnce(mockUser)
     return request(app)
-      .post(`/api/v1/streets/images/${street.id}`)
+      .post(`/api/v1/streets/${street.id}/images`)
       .type('text/plain')
       .send(JSON.stringify(details))
       .then((response) => {
@@ -59,7 +59,7 @@ describe('POST api/v1/streets/images/:street_id', () => {
     cloudinary.v2.api.resource.mockReturnValueOnce(null)
 
     return request(app)
-      .post(`/api/v1/streets/images/${street.id}`)
+      .post(`/api/v1/streets/${street.id}/images`)
       .type('text/plain')
       .send(JSON.stringify(details))
       .then((response) => {
@@ -73,7 +73,7 @@ describe('POST api/v1/streets/images/:street_id', () => {
     jwtMock.mockReturnValueOnce(mockAltUser)
 
     return request(app)
-      .post(`/api/v1/streets/images/${street.id}`)
+      .post(`/api/v1/streets/${street.id}/images`)
       .type('text/plain')
       .send(JSON.stringify(details))
       .then((response) => {
@@ -82,12 +82,12 @@ describe('POST api/v1/streets/images/:street_id', () => {
   })
 })
 
-describe('DELETE api/v1/streets/images/:street_id', () => {
+describe('DELETE api/v1/streets/:street_id/images', () => {
   const app = setupMockServer((app) => {
     app.delete(
-      '/api/v1/streets/images/:street_id',
+      '/api/v1/streets/:street_id/images',
       mockUserMiddleware,
-      images.delete
+      images.del
     )
   })
 
@@ -99,23 +99,23 @@ describe('DELETE api/v1/streets/images/:street_id', () => {
     jwtMock.mockReturnValueOnce(mockUser)
 
     return request(app)
-      .delete(`/api/v1/streets/images/${street.id}`)
+      .delete(`/api/v1/streets/${street.id}/images`)
       .then((response) => {
         expect(response.statusCode).toEqual(204)
       })
   })
 })
 
-describe('GET api/v1/streets/images/:street_id', () => {
+describe('GET api/v1/streets/:street_id/images', () => {
   const app = setupMockServer((app) => {
-    app.get('/api/v1/streets/images/:street_id', mockUserMiddleware, images.get)
+    app.get('/api/v1/streets/:street_id/images', mockUserMiddleware, images.get)
   })
 
   cloudinary.v2.api.resource.mockResolvedValue('foo')
 
   it('should respond with 200 when street thumbnail is found', () => {
     return request(app)
-      .get(`/api/v1/streets/images/${street.id}`)
+      .get(`/api/v1/streets/${street.id}/images`)
       .then((response) => {
         expect(response.statusCode).toEqual(200)
       })

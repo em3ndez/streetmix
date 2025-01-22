@@ -1,7 +1,7 @@
-const chalk = require('chalk')
-const logger = require('../../../lib/logger.js')()
+import chalk from 'chalk'
+import logger from '../../lib/logger.js'
 
-exports.post = (req, res) => {
+export function post (req, res) {
   const cspReport = req.body['csp-report']
 
   // Early exit if a POST did not contain the report body
@@ -15,6 +15,7 @@ exports.post = (req, res) => {
   // multiple use cases abstractly, but for now, we handle cases specifically
   if (
     cspReport['blocked-uri'].startsWith('https://platform.twitter.com') ||
+    cspReport['blocked-uri'] === 'eval' ||
     cspReport['source-file'] === 'moz-extension'
   ) {
     res.status(204).end()

@@ -1,66 +1,48 @@
-process.title = 'streetmix'
-const path = require('path')
-const dotenv = require('dotenv').config({
-  debug: process.env.DEBUG
-})
-
-// Error parsing .env file
-// It's okay to skip if we can't find it
-if (dotenv.error && dotenv.error.code !== 'ENOENT') {
-  throw dotenv.error
-}
-
-// Run this before other modules
-if (process.env.NEW_RELIC_LICENSE_KEY) {
-  require('newrelic')
-}
-
-// Set some defaults for env vars, if not set
-// This must be set after `dotenv` loads
-process.env.APP_DOMAIN = process.env.APP_DOMAIN || 'localhost'
-process.env.APP_PROTOCOL =
-  process.env.PROTOCOL || process.env.APP_DOMAIN === 'localhost'
-    ? 'http'
-    : 'https'
-process.env.PORT = process.env.PORT || 8000
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
-
-const compression = require('compression')
-const cookieParser = require('cookie-parser')
-const cookieSession = require('cookie-session')
-const express = require('express')
-const helmet = require('helmet')
-const swaggerUi = require('swagger-ui-express')
-const swaggerJSDoc = require('swagger-jsdoc')
-const chalk = require('chalk')
-const passport = require('passport')
-const controllers = require('./app/controllers')
-const requestHandlers = require('./lib/request_handlers')
-const initCloudinary = require('./lib/cloudinary')
-const compileSVGSprites = require('./lib/svg-sprite')
-const appURL = require('./lib/url')
-const apiRoutes = require('./app/api_routes')
-const serviceRoutes = require('./app/service_routes')
-const logger = require('./lib/logger.js')()
-const jwtCheck = require('./app/authentication')
+import './app/globals.js'
+import path from 'node:path'
+import url from 'node:url'
+import compression from 'compression'
+import cookieParser from 'cookie-parser'
+import cookieSession from 'cookie-session'
+import express from 'express'
+import helmet from 'helmet'
+import swaggerUi from 'swagger-ui-express'
+import swaggerJSDoc from 'swagger-jsdoc'
+import chalk from 'chalk'
+import passport from 'passport'
+import * as controllers from './app/controllers/index.js'
+import * as requestHandlers from './app/lib/request_handlers/index.js'
+import { initCloudinary } from './app/lib/cloudinary.js'
+import { compileSVGSprites } from './app/lib/svg_sprite.js'
+import appURL from './app/lib/url.js'
+import apiRoutes from './app/api_routes.js'
+import serviceRoutes from './app/service_routes.js'
+import logger from './app/lib/logger.js'
+import jwtCheck from './app/authentication.js'
 
 initCloudinary()
-compileSVGSprites('assets/images/icons/', 'icons', 'icon')
-compileSVGSprites('assets/images/illustrations', 'illustrations', 'image')
-compileSVGSprites(
-  'node_modules/@streetmix/illustrations/images/',
-  'images',
-  'image'
-)
 
-const app = (module.exports = express())
+// Build SVG sprites before starting Express server
+await Promise.all([
+  compileSVGSprites('packages/variant-icons/icons/', 'icons', 'icon'),
+  compileSVGSprites('assets/images/illustrations', 'illustrations', 'image'),
+  compileSVGSprites('packages/illustrations/images/', 'images', 'image')
+])
+
+const app = express()
+export default app
+
+// Set __dirname (no longer automatically globally accessible in ESM)
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 // Get the timestamp of this server's start time to use as a cachebusting filename.
 const cacheTimestamp = Date.now()
 app.locals.cacheTimestamp = cacheTimestamp
 
 process.on('uncaughtException', function (error) {
-  logger.error(chalk`[process] {bold Uncaught exception:} ${error}`)
+  logger.error(
+    '[process] ' + chalk.redBright.bold('Uncaught exception: ') + error
+  )
 
   console.trace()
   process.exit(1)
@@ -70,7 +52,7 @@ process.on('uncaughtException', function (error) {
 // Note: various sources tell us that this does not work on Windows
 process.on('SIGINT', function () {
   if (process.env.NODE_ENV === 'development') {
-    logger.info(chalk`[express] {yellow.bold Stopping Streetmix!}`)
+    logger.info('[express] ' + chalk.yellowBright.bold('Stopping Streetmix!'))
   }
   process.exit()
 })
@@ -86,12 +68,13 @@ app.locals.env = {
 const helmetConfig = {
   frameguard: false, // Allow Streetmix to be iframed in 3rd party sites
   contentSecurityPolicy: false, // These are set explicitly later
+  crossOriginEmbedderPolicy: false, // Load external assets
   hsts: {
     maxAge: 5184000, // 60 days
     includeSubDomains: false // we don't have a wildcard ssl cert
   },
   referrerPolicy: {
-    policy: 'no-referrer-when-downgrade'
+    policy: 'strict-origin-when-cross-origin'
   }
 }
 
@@ -99,26 +82,19 @@ const helmetConfig = {
 const csp = {
   directives: {
     defaultSrc: ["'self'"],
-    styleSrc: [
-      "'self'",
-      "'unsafe-inline'",
-      'fonts.googleapis.com',
-      'checkout.stripe.com'
-    ],
+    styleSrc: ["'self'", "'unsafe-inline'", 'checkout.stripe.com'],
     scriptSrc: [
       "'self'",
       'platform.twitter.com',
-      'cdn.mxpnl.com',
       process.env.AUTH0_DOMAIN,
       '*.basemaps.cartocdn.com',
       process.env.PELIAS_HOST_NAME,
-      'downloads.mailchimp.com.s3.amazonaws.com',
       'checkout.stripe.com',
-      'plausible.io',
-      'cdn.coil.com'
+      'plausible.io'
     ],
     workerSrc: ["'self'"],
     childSrc: ['platform.twitter.com'],
+    frameAncestors: ["'self'", 'https:'],
     frameSrc: ["'self'", 'streetmix.github.io', 'checkout.stripe.com'],
     imgSrc: [
       "'self'",
@@ -127,13 +103,13 @@ const csp = {
       'pbs.twimg.com',
       'syndication.twitter.com',
       's.gravatar.com',
-      // Auth0 default profile images
-      'https://i0.wp.com/cdn.auth0.com/',
+      'lh3.googleusercontent.com',
+      '*.wp.com/cdn.auth0.com', // Auth0 default profile images
       '*.basemaps.cartocdn.com',
-      'https://res.cloudinary.com/',
+      'res.cloudinary.com',
       '*.stripe.com'
     ],
-    fontSrc: ["'self'", 'fonts.gstatic.com'],
+    fontSrc: ["'self'"],
     connectSrc: [
       "'self'",
       process.env.PELIAS_HOST_NAME,
@@ -142,6 +118,7 @@ const csp = {
       process.env.AUTH0_DOMAIN,
       'checkout.stripe.com',
       'plausible.io',
+      'buttondown.com',
       'buttondown.email'
     ],
     reportUri: '/services/csp-report/'
@@ -174,10 +151,11 @@ app.use(
   })
 )
 
-app.use(requestHandlers.request_log)
-app.use(requestHandlers.request_id_echo)
+app.use(requestHandlers.requestLog)
+app.use(requestHandlers.requestIdEcho)
 
 app.use(passport.initialize())
+app.use(passport.session())
 
 // Set variables for use in view templates
 app.use((req, res, next) => {
@@ -200,6 +178,7 @@ app.use((req, res, next) => {
 })
 
 // Set CSP directives
+// eslint-disable-next-line import/no-named-as-default-member
 app.use(helmet.contentSecurityPolicy(csp))
 
 // Rewrite requests with timestamp
@@ -225,42 +204,46 @@ app.get('/terms-of-service', (req, res) =>
   res.redirect('https://about.streetmix.net/terms-of-use/')
 )
 
-// API routes
-app.use('', apiRoutes)
-app.use('', serviceRoutes)
-
-app.use(
-  '/assets',
-  express.static(path.join(__dirname, '/build'), { fallthrough: false })
-)
-app.use(express.static(path.join(__dirname, '/public')))
-
-// Allow hot-module reloading (HMR)
-// and attach API docs
-// in non-production environments
+// Attach API docs in non-production environments
 if (process.env.NODE_ENV !== 'production') {
-  const runBundle = require('./app/bundle')
-  runBundle(app)
-
   const options = {
     definition: {
       info: {
-        title: 'Streetmix', // Title (required)
-        version: '0.1.0' // Version (required)
+        title: 'Streetmix',
+        version: process.env.npm_package_version
       }
     },
-    apis: ['./app/api_routes.js', './app/service_routes.js']
+    apis: ['app/api_routes.js', 'app/service_routes.js']
   }
   const displayOptions = {
     customCss: '.swagger-ui .topbar { display: none }'
   }
   const swaggerSpec = swaggerJSDoc(options)
+
+  // This route must be defined before the catch-all handler of `/api/*`
   app.use(
-    '/api-docs',
+    '/api/docs',
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, displayOptions)
   )
 }
+
+// API routes
+app.use('/api', apiRoutes)
+app.use('/services', serviceRoutes)
+
+app.use('/assets', express.static(path.join(__dirname, '/build')))
+app.use(express.static(path.join(__dirname, '/public')))
+
+// Catch-all for broken asset paths.
+// Matches '/images/*'
+app.all(/\/images\/.*/, (req, res) => {
+  res.status(404).render('404')
+})
+// Matches '/assets/*'
+app.all(/\/assets\/.*/, (req, res) => {
+  res.status(404).render('404')
+})
 
 app.get(
   ['/:user_id/:namespacedId', '/:user_id/:namespacedId/:street_name'],
@@ -269,6 +252,5 @@ app.get(
 
 // Catch-all, also passes a btpToken for coil integration of streaming payments
 app.use(function (req, res) {
-  res.locals.btpToken = req.session.btpToken
   res.render('main')
 })

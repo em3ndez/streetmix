@@ -1,13 +1,11 @@
-'use strict'
-
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Street = sequelize.define(
     'Street',
     {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: DataTypes.STRING
+        type: DataTypes.UUID
       },
       namespacedId: {
         type: DataTypes.INTEGER,
@@ -48,6 +46,9 @@ module.exports = (sequelize, DataTypes) => {
         {
           unique: true,
           fields: ['id']
+        },
+        {
+          fields: ['original_street_id']
         }
       ]
     },

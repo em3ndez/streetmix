@@ -1,7 +1,7 @@
-const Street = require('../../db/models/street.js')
-const logger = require('../../../lib/logger.js')()
+import Street from '../../db/models/street.js'
+import logger from '../../lib/logger.js'
 
-exports.get = async function (req, res) {
+export async function get (req, res) {
   let results
 
   try {
@@ -32,7 +32,7 @@ exports.get = async function (req, res) {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: coordinates
+        coordinates
       },
       properties: result
     }

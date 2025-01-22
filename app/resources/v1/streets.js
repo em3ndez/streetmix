@@ -1,13 +1,15 @@
-const { v1: uuidv1 } = require('uuid')
-const { isArray } = require('lodash')
-const { ERRORS, asStreetJson } = require('../../../lib/util')
-const logger = require('../../../lib/logger.js')()
-const { User, Street, Sequence } = require('../../db/models')
+import { v4 as uuidv4 } from 'uuid'
+import models from '../../db/models/index.js'
+import logger from '../../lib/logger.js'
+import { ERRORS, asStreetJson } from '../../lib/util.js'
+import { updateToLatestSchemaVersion } from '../../lib/street_schema_update.js'
 
-exports.post = async function (req, res) {
+const { User, Street, Sequence } = models
+
+export async function post (req, res) {
   let body
   const street = {}
-  street.id = uuidv1()
+  street.id = uuidv4()
   const requestIp = function (req) {
     if (req.headers['x-forwarded-for'] !== undefined) {
       return req.headers['x-forwarded-for'].split(', ')[0]
@@ -27,7 +29,6 @@ exports.post = async function (req, res) {
     }
     // TODO: Validation
     street.name = body.name
-    street.namespacedId = body.data.namespacedId
     street.clientUpdatedAt = body.clientUpdatedAt
     street.data = body.data
     street.creatorIp = requestIp(req)
@@ -65,12 +66,13 @@ exports.post = async function (req, res) {
   const makeNamespacedId = async function () {
     let namespacedId
     try {
-      if (req.user && req.user.sub) {
-        const user = await updateUserLastStreetId(req.user.sub)
+      if (req.auth?.sub) {
+        const user = await updateUserLastStreetId(req.auth.sub)
         namespacedId = user && user.lastStreetId ? user.lastStreetId : 1
       } else {
         const sequence = await updateSequence()
-        if (isArray(sequence)) {
+
+        if (Array.isArray(sequence)) {
           namespacedId = sequence[1][0].seq
         } else {
           namespacedId = sequence.seq
@@ -115,7 +117,6 @@ exports.post = async function (req, res) {
 
   const handleCreatedStreet = (s) => {
     s = asStreetJson(s)
-    logger.info({ street: s }, 'New street created.')
     res.header('Location', '/api/v1/streets/' + s.id)
     res.status(201).json(s)
   }
@@ -143,11 +144,11 @@ exports.post = async function (req, res) {
     }
   }
 
-  if (req.user) {
+  if (req.auth) {
     let user
     try {
       user = await User.findOne({
-        where: { auth0_id: req.user.sub }
+        where: { auth0_id: req.auth.sub }
       })
     } catch (err) {
       logger.error(err)
@@ -165,8 +166,8 @@ exports.post = async function (req, res) {
   }
 }
 
-exports.delete = async function (req, res) {
-  if (!req.user) {
+export async function del (req, res) {
+  if (!req.auth) {
     res.status(401).end()
     return
   }
@@ -178,13 +179,13 @@ exports.delete = async function (req, res) {
 
   async function deleteStreet (street) {
     let user
-    if (!req.user) {
+    if (!req.auth) {
       throw new Error(ERRORS.UNAUTHORISED_ACCESS)
     }
 
     try {
       user = await User.findOne({
-        where: { auth0_id: req.user.sub }
+        where: { auth0_id: req.auth.sub }
       })
     } catch (err) {
       logger.error(err)
@@ -233,7 +234,9 @@ exports.delete = async function (req, res) {
   let targetStreet
 
   try {
-    targetStreet = await Street.findOne({ where: { id: req.params.street_id } })
+    targetStreet = await Street.findOne({
+      where: { id: req.params.street_id }
+    })
   } catch (err) {
     logger.error(err)
     handleErrors(ERRORS.STREET_NOT_FOUND)
@@ -249,9 +252,9 @@ exports.delete = async function (req, res) {
       res.status(204).end()
     })
     .catch(handleErrors)
-} // END function - exports.delete
+} // END function - export delete
 
-exports.get = async function (req, res) {
+export async function get (req, res) {
   if (!req.params.street_id) {
     res.status(400).json({ status: 400, msg: 'Please provide street ID.' })
     return
@@ -283,13 +286,33 @@ exports.get = async function (req, res) {
     res.status(204).end()
     return
   }
-  street = asStreetJson(street)
+
+  // Deprecated undoStack and undoPosition values, delete if present
+  delete street.data.undoStack
+  delete street.data.undoPosition
+
+  // Run schema update on street
+  const [isUpdated, updatedStreet] = updateToLatestSchemaVersion(
+    street.data.street
+  )
+  if (isUpdated) {
+    street.data.street = updatedStreet
+    // Sequelize does not detect nested data changes, so we have to
+    // manually mark the data as changed. We only save to database
+    // if we've actually changed the data
+    street.changed('data', true)
+    // Update, but not the updated_at field
+    await street.save({ silent: true })
+  }
+
+  const streetJson = asStreetJson(street)
+
   res.set('Access-Control-Allow-Origin', '*')
   res.set('Location', '/api/v1/streets/' + street.id)
-  res.status(200).json(street)
-} // END function - exports.get
+  res.status(200).json(streetJson)
+} // END function - export get
 
-exports.find = async function (req, res) {
+export async function find (req, res) {
   const creatorId = req.query.creatorId
   const namespacedId = req.query.namespacedId
   const start = (req.query.start && Number.parseInt(req.query.start, 10)) || 0
@@ -304,16 +327,17 @@ exports.find = async function (req, res) {
     }
 
     if (!user) {
-      throw new Error(ERRORS.USER_NOT_FOUND)
+      handleErrors(ERRORS.USER_NOT_FOUND)
+      return
     }
     return Street.findOne({
-      where: { namespacedId: namespacedId, creatorId: user.id }
+      where: { namespacedId, creatorId: user.id }
     })
   } // END function - findStreetWithCreatorId
 
   const findStreetWithNamespacedId = async function (namespacedId) {
     return Street.findOne({
-      where: { namespacedId: namespacedId, creatorId: null }
+      where: { namespacedId, creatorId: null }
     })
   }
 
@@ -326,6 +350,9 @@ exports.find = async function (req, res) {
     })
   } // END function - findStreets
 
+  // TODO: There is a bug here where errors thrown by `new Error` will have
+  // its value in `error.message`, not error! We should figure out how to
+  // make this be consistent
   function handleErrors (error) {
     switch (error) {
       case ERRORS.USER_NOT_FOUND:
@@ -378,7 +405,7 @@ exports.find = async function (req, res) {
           self: selfUri
         }
       },
-      streets: streets
+      streets
     }
 
     if (start > 0) {
@@ -425,7 +452,7 @@ exports.find = async function (req, res) {
   }
 }
 
-exports.put = async function (req, res) {
+export async function put (req, res) {
   let body
 
   if (req.body) {
@@ -544,13 +571,13 @@ exports.put = async function (req, res) {
       })
       .catch(handleErrors)
   } else {
-    if (!req.user) {
+    if (!req.auth) {
       res.status(401).end()
       return
     }
 
     const user = await User.findOne({
-      where: { auth0_id: req.user.sub }
+      where: { auth0_id: req.auth.sub }
     })
 
     const isOwner = user && user.id === street.creatorId
@@ -565,4 +592,4 @@ exports.put = async function (req, res) {
       })
       .catch(handleErrors)
   }
-} // END function - exports.put
+} // END function - export put

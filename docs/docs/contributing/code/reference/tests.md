@@ -26,7 +26,7 @@ npm cypress:run
 
 ## Unit and integration tests {#unit-tests}
 
-Our primary test framework is the [Jest](https://jestjs.io/) test runner with [React Testing Library (RTL)](https://testing-library.com/docs/react-testing-library/intro). (These do not do the same thing and are not interchangeable; these two systems work closely together to provide a full unit and integration test environment.) See the list of resources below, which fully document why and how we use these.
+Our primary test framework is the [Vitest](https://vitest.dev/) test runner with [React Testing Library (RTL)](https://testing-library.com/docs/react-testing-library/intro). (These do not do the same thing and are not interchangeable; these two systems work closely together to provide a full unit and integration test environment.) See the list of resources below, which fully document why and how we use these.
 
 Our goal is to be as close as possible to "industry best practice" in order to simplify our understanding and comprehension of tests. _Please do not do anything exotic in these tests._
 
@@ -78,17 +78,15 @@ We also use [Prettier](https://github.com/prettier/prettier) to automatically fo
 
 JavaScript is notoriously not type safe: you may pass any type of object or JavaScript primitive to any function or method, which may not be able to handle them. Or you may write a function that returns values of different types, and the calling script wasn't expecting that return value. Various attempts to introduce type safety on top of JavaScript have entered the ecosystem, and here's how we use these tools.
 
+### TypeScript
+
+[TypeScript](https://www.typescriptlang.org/) is an extension of the JavaScript language that allows types to be checked statically (that is, reason about whether the right types are being passed around, without having to run the code itself). It's been [growing steadily in popularity](https://2018.stateofjs.com/javascript-flavors/typescript/) over the past few years. We are currently in the middle of migrating our codebase to TypeScript, while removing PropTypes.
+
 ### PropTypes (React)
 
 [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html) is a runtime typechecking library used for React development. Because it is a runtime checker, PropTypes will only throw errors in the console when running in the browser or in test suites. (The PropTypes library is not compiled into production code.)
 
-We currently enforce using PropTypes for React components in development. This means that React components must declare all of its props and what types of values that prop should be. The benefit of this approach is that React components self-document what props it accepts. Sometimes, a prop can be overloaded with multiple types, but this is generally discouraged if you can avoid it.
-
-### TypeScript
-
-[TypeScript](https://www.typescriptlang.org/) is an extension of the JavaScript language that allows types to be checked statically (that is, reason about whether the right types are being passed around, without having to run the code itself). It's been [growing steadily in popularity](https://2018.stateofjs.com/javascript-flavors/typescript/) over the past few years.
-
-We have experimented with TypeScript, but we've not fully adopted it into Streetmix. Because we already compile code with Babel, adopting TypeScript piecemeal is doable. However, we have not yet run into a situation where we absolutely _need_ TypeScript. That being said, if and when a good case can be made for adopting it, we will likely jump on board. If a migration to TypeScript occurs in React components, it will supercede using PropTypes.
+For React components not written in TypeScript, we use PropTypes in development. This means that React components must declare all of its props and what types of values that prop should be. The benefit of this approach is that React components self-document what props it accepts. Sometimes, a prop can be overloaded with multiple types, but this is generally discouraged if you can avoid it.
 
 ## Device and browser testing
 
@@ -111,19 +109,6 @@ Currently, there is no automatic deployment to the production server. We've noti
 ## GitHub checks
 
 In addition to continuous integration, we use some third-party services to keep an eye on code quality and test coverage. These services should be considered "code smell" detectors, but treat them with a grain of salt. They are not required to pass before merging pull requests.
-
-### CodeClimate
-
-[CodeClimate](https://codeclimate.com/github/streetmix/streetmix) measures **technical debt**, or the long-term maintainability and readability of code. It applies some heuristics to detect and track "code smells," which are opportunities to refactor code or fix potential bugs. A CodeClimate review is triggered automatically on every pull request, but some of the thresholds it uses are quite arbitrary. Here's some of the issues are raised, and how we'd address them, in order of increasing severity (as it applies to Streetmix):
-
-- **Lines of code**. CodeClimate triggers a warning when functions and modules exceed an arbitrary line limit. This means there is a potential opportunity to separate concerns, but we will never enforce this, since we don't want to encourage "code golf" or quick workarounds instead of actually taking the time to separate logic. If something can be refactored into smaller pieces, but can't be prioritized immediately, add a `TODO` comment instead. If something doesn't make sense to shorten, mark the issue as "Wontfix".
-- **Duplicate code.** CodeClimate triggers a warning when it detects code that look the same as other code elsewhere. This can be an opportunity to refactor code, but more often than not, CodeClimate is seeing similar-looking boilerplate code or patterns. In this case, mark the issue as "Invalid".
-- **Cognitive complexity.** CodeClimate triggers a warning when a function contains too many conditional statements, resulting in complex branching or looping code. Not all code can be made simpler, but you may want to consider whether it can be written diffferently. However, use your best judgment here. If you don't agree with CodeClimate's assessment, mark the issue as "Wontfix".
-- **TODOs**. CodeClimate tracks when a `TODO` or a `FIXME` comment is written in the code. Because this is a developer's own judgment call, this takes priority above other issues and should be addressed in the future. Never mark this as "Wontfix" or "Invalid". If it's no longer valid, instead remove the `TODO` or `FIXME` comment from the code.
-
-Issues that should be addressed in the future, but can't or won't be addressed immediately, should be marked with "Confirmed."
-
-In spite of CodeClimate's warnings, reviewers may approve its review even if the issues it raises are not addressed right away.
 
 ### Codecov
 

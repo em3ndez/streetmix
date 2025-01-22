@@ -1,18 +1,19 @@
-'use strict'
+import * as fs from 'node:fs/promises'
+import { getFromTransifex } from '@streetmix/i18n'
 
-const fs = require('fs')
-const util = require('util')
-const logger = require('../../../lib/logger.js')()
-const getFromTransifex = require('../../../lib/transifex.js')
-
-const readFile = util.promisify(fs.readFile)
+import logger from '../../lib/logger.js'
 
 async function getLocalTranslation (res, locale, resource) {
   const translationFile =
-    process.cwd() + '/assets/locales/' + locale + '/' + resource + '.json'
+    process.cwd() +
+    '/packages/i18n/locales/' +
+    locale +
+    '/' +
+    resource +
+    '.json'
 
   try {
-    return await readFile(translationFile, 'utf8')
+    return await fs.readFile(translationFile, 'utf8')
   } catch (err) {
     logger.error(err)
 
@@ -40,7 +41,7 @@ function sendSuccessResponse (res, locale, resource, translation) {
   res.status(200).send(translation)
 }
 
-exports.get = async (req, res) => {
+export async function get (req, res) {
   const locale = req.params.locale_code
   const resource = req.params.resource_name
 
@@ -52,9 +53,15 @@ exports.get = async (req, res) => {
   let translation
 
   try {
-    if (typeof process.env.TRANSIFEX_API_TOKEN === 'undefined') {
+    // Transifex v3 won't return the English source language via the
+    // download API. For English, use local resources.
+    if (
+      typeof process.env.TRANSIFEX_API_TOKEN === 'undefined' ||
+      locale === 'en'
+    ) {
       translation = await getLocalTranslation(res, locale, resource)
     } else {
+      // TODO: Fall back to local translation if remote resource fails
       translation = await getFromTransifex(
         locale,
         resource,
@@ -68,6 +75,7 @@ exports.get = async (req, res) => {
       status: 500,
       msg: 'Could not retrieve translation for locale: ' + locale
     })
+    return
   }
 
   if (translation) {

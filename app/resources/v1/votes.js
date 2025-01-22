@@ -1,15 +1,17 @@
-const Sequelize = require('sequelize')
-const { v4: uuidv4 } = require('uuid')
-const { User, Vote, Street } = require('../../db/models')
-const logger = require('../../../lib/logger.js')()
+import Sequelize from 'sequelize'
+import { v4 as uuidv4 } from 'uuid'
+import models from '../../db/models/index.js'
+import logger from '../../lib/logger.js'
+
+const { User, Vote, Street } = models
 
 const MAX_COMMENT_LENGTH = 280
 const SURVEY_FINISHED_PATH = '/survey-finished'
 
-const generateRandomBallotFetch = ({ redirect = false }) => {
+export function generateRandomBallotFetch ({ redirect = false }) {
   return async function (req, res) {
     let ballots
-    const authUser = req.user || {}
+    const authUser = req.auth || {}
     let user
     if (authUser.sub) {
       try {
@@ -24,7 +26,7 @@ const generateRandomBallotFetch = ({ redirect = false }) => {
     try {
       let hasValidStreet = false
       while (!hasValidStreet) {
-        if (!req.user) {
+        if (!req.auth) {
           ballots = await Vote.findAll({
             where: {
               voterId: {
@@ -173,12 +175,10 @@ const generateRandomBallotFetch = ({ redirect = false }) => {
   }
 }
 
-exports.generateRandomBallotFetch = generateRandomBallotFetch
+export const get = generateRandomBallotFetch({ redirect: false })
 
-exports.get = generateRandomBallotFetch({ redirect: false })
-
-exports.put = async function (req, res) {
-  const authUser = req.user || {}
+export async function put (req, res) {
+  const authUser = req.auth || {}
   const { id, comment } = req.body
 
   if (!authUser.sub) {
@@ -201,7 +201,7 @@ exports.put = async function (req, res) {
     return
   }
   const ballot = await Vote.findOne({
-    where: { id: id, voter_id: user.id }
+    where: { id, voter_id: user.id }
   })
 
   if (!ballot) {
@@ -229,8 +229,8 @@ exports.put = async function (req, res) {
   res.status(200).json(ballot)
 }
 
-exports.post = async function (req, res) {
-  const authUser = req.user || {}
+export async function post (req, res) {
+  const authUser = req.auth || {}
 
   if (!authUser.sub) {
     res.status(401).json({ status: 401, msg: 'Please provide user ID.' })
@@ -295,7 +295,7 @@ exports.post = async function (req, res) {
     res.status(500).json({ status: 500, msg: 'Error filling ballot.' })
     return
   }
-  const payload = { ballot, savedBallot, updates: updates }
+  const payload = { ballot, savedBallot, updates }
 
   res.status(200).json(payload)
 }

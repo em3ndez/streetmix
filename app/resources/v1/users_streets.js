@@ -1,6 +1,8 @@
-const { User, Street } = require('../../db/models')
-const { ERRORS } = require('../../../lib/util')
-const logger = require('../../../lib/logger.js')()
+import models from '../../db/models/index.js'
+import { ERRORS } from '../../lib/util.js'
+import logger from '../../lib/logger.js'
+
+const { User, Street } = models
 
 function handleErrors (error, res) {
   switch (error) {
@@ -22,9 +24,10 @@ function handleErrors (error, res) {
       res.status(401).json({ status: 401, msg: 'User is not signed-in.' })
       break
     case ERRORS.FORBIDDEN_REQUEST:
-      res
-        .status(403)
-        .json({ status: 403, msg: 'Signed-in user cannot delete this street.' })
+      res.status(403).json({
+        status: 403,
+        msg: 'Signed-in user cannot delete this street.'
+      })
       break
     default:
       // Log unknown error.
@@ -33,10 +36,11 @@ function handleErrors (error, res) {
   }
 } // END function - handleErrors
 
-exports.get = async function (req, res) {
+export async function get (req, res) {
   // Flag error if user ID is not provided
   if (!req.params.user_id) {
     res.status(400).json({ status: 400, msg: 'Please provide user ID.' })
+    return
   }
 
   const findUserStreets = async function (userId) {
@@ -59,11 +63,8 @@ exports.get = async function (req, res) {
   } // END function - handleFindUserstreets
 
   const handleFindUserStreets = function (streets) {
-    const json = { streets: streets }
-    res
-      .status(200)
-      .json(json)
-      .end()
+    const json = { streets }
+    res.status(200).json(json).end()
   } // END function - handleFindUserStreets
 
   function handleErrors (error) {
@@ -102,6 +103,7 @@ exports.get = async function (req, res) {
   } catch (err) {
     logger.error(err)
     handleErrors(ERRORS.CANNOT_GET_STREET)
+    return
   }
 
   if (!user) {
@@ -117,23 +119,26 @@ exports.get = async function (req, res) {
   }
 }
 
-exports.delete = async function (req, res) {
+export async function del (req, res) {
   // Flag error if user ID is not provided
   if (!req.params.user_id) {
     res.status(400).json({ status: 400, msg: 'Please provide user ID.' })
-  } else if (!req.user) {
+    return
+  } else if (!req.auth) {
     res
       .status(400)
       .json({ status: 400, msg: 'Please provide a logged in user' })
+    return
   }
 
   let requestUser
 
   try {
-    requestUser = await User.findOne({ where: { auth0_id: req.user.sub } })
+    requestUser = await User.findOne({ where: { auth0_id: req.auth.sub } })
   } catch (error) {
     logger.error(error)
     res.status(500).json({ status: 500, msg: 'Error finding user.' })
+    return
   }
 
   if (!requestUser) {
@@ -153,9 +158,10 @@ exports.delete = async function (req, res) {
     requestUser.roles && requestUser.roles.indexOf('ADMIN') !== -1
   if (targetUserId !== requestUser.id) {
     if (!requestUserIsAdmin) {
-      res
-        .status(401)
-        .json({ status: 401, msg: 'Unable to delete streets by another user.' })
+      res.status(401).json({
+        status: 401,
+        msg: 'Unable to delete streets by another user.'
+      })
       return
     }
 
@@ -164,6 +170,7 @@ exports.delete = async function (req, res) {
     } catch (error) {
       logger.error(error)
       res.status(500).json({ status: 500, msg: 'Error finding user.' })
+      return
     }
 
     if (!targetUser) {
@@ -178,6 +185,7 @@ exports.delete = async function (req, res) {
     if (error) {
       logger.error(error)
       handleErrors(ERRORS.CANNOT_UPDATE_STREET, res)
+      return
     }
 
     res.status(204).end()

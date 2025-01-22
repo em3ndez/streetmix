@@ -1,0 +1,530 @@
+{
+  "menu": {
+    "item": {
+      "help": "Nápověda",
+      "about": "O Streetmixu...",
+      "whatsnew": "Co je nového?",
+      "contact": "Kontakt",
+      "community": "Komunita",
+      "sign-in": "Přihlásit se",
+      "sign-out": "Odhlásit se",
+      "new-street": "Nová ulice",
+      "my-streets": "Moje ulice",
+      "settings": "Nastavení",
+      "share": "Sdílení",
+      "store": "Sklad",
+      "upgrade": "Aktualizace",
+      "streetmix-plus": "Získejte Streetmix+"
+    },
+    "help": {
+      "guidebook-link": "Příručka",
+      "keyboard-label": "Klávesové zkratky:",
+      "remove-instruction": "Odstranění segmentu, na který ukazujete",
+      "remove-shift-instruction": "(podržte {shiftKey} pro odstranění všech)",
+      "move-instruction": "Pohyb po ulici",
+      "move-shift-instruction": "(podržením {shiftKey} přiskočíte k okraji)",
+      "change-instruction": "Změňte šířku segmentu, na který ukazujete.",
+      "change-shift-instruction": "(podržte {shiftKey} pro větší přesnost)"
+    },
+    "share": {
+      "sign-in-twitter-link": "Přihlásit se",
+      "sign-in-link": "{signInLink} pro hezčí odkazy na vaše ulice a vaši osobní galerii ulic.",
+      "link": "Zkopírujte a vložte tento odkaz pro sdílení:",
+      "copy-to-clipboard": "Kopírovat do schránky",
+      "twitter": "Sdílet pomocí Twitteru",
+      "facebook": "Sdílet přes Facebook",
+      "mastodon": "Sdílet pomocí Mastodon",
+      "3dstreet": "Otevřít v 3DStreet",
+      "print": "Tisk...",
+      "save": "Uložit jako obrázek...",
+      "save-byline": "Pro zahrnutí do zprávy, blogu apod.",
+      "messages": {
+        "my-street": "Podívejte se na mou ulici, {streetName}, na Streetmixu!",
+        "my-street-unnamed": "Podívejte se na moji ulici na Streetmixu!",
+        "someone-elses-street": "Podívejte se na {streetName}od {streetCreator} na Streetmixu!",
+        "someone-elses-street-unnamed": "Podívejte se na tuto ulici od {streetCreator}na Streetmixu!",
+        "anonymous-creator-street": "Mrkněte na {streetName} na Streetmixu!",
+        "anonymous-creator-street-unnamed": "Podívejte se na tuto ulici na Streetmixu!"
+      }
+    },
+    "contact": {
+      "forums": "Diskutujte na fóru",
+      "email": "Odeslat e-mail týmu Streetmix",
+      "github": "Zobrazit zdrojový kód na GitHubu",
+      "blog": "Navštivte blog Streetmix",
+      "discord": "Připojte se k chatu Discord",
+      "slack": "Připojte se k chatu na Slacku",
+      "newsletter": "Přihlaste se k odběru našeho zpravodaje"
+    },
+    "feedback": {
+      "prompt": "",
+      "message-placeholder": "",
+      "email-placeholder": "",
+      "send": "",
+      "confirm": "",
+      "error": ""
+    },
+    "sign-in": {
+      "twitter": "Přihlášení pomocí Twitteru"
+    }
+  },
+  "settings": {
+    "heading": "Nastavení",
+    "info-tooltip": "Popis",
+    "general": {
+      "label": "Obecné"
+    },
+    "appearance": {
+      "label": "Vzhled"
+    },
+    "language": {
+      "label": "Jazyk"
+    },
+    "profile": {
+      "label": "Profil",
+      "username": "Uživatelské jméno",
+      "username-description": "Vaše uživatelské jméno je jedinečný identifikátor účtu.",
+      "display-name": "Zobrazované jméno",
+      "display-name-description": "Vaše zobrazované jméno je způsob, jakým se zobrazujete ostatním uživatelům ve službě Streetmix.",
+      "display-name-not-set": "Zatím jste nepřidali zobrazované jméno.",
+      "display-name-error": "Zobrazované jméno nelze uložit",
+      "display-name-characters-remaining": "Zbývající znaky: {currentNum} ({maxNum} maximálně)"
+    },
+    "misc": {
+      "label": "Různé",
+      "silly-clowns": "Blázniví klauni",
+      "silly-clowns-description": "Povoluje velikonoční vajíčka."
+    },
+    "theme": {
+      "label": "Motiv",
+      "description": "Nastaví barevné schéma uživatelského rozhraní.",
+      "light": "Světlý motiv",
+      "dark": "Tmavý motiv",
+      "system": "Použít systémové předvolby"
+    },
+    "units": {
+      "label": "Jednotky",
+      "metric": "Metrické jednotky (metry)",
+      "imperial": "Imperiální jednotky (stopy)"
+    }
+  },
+  "msg": {
+    "loading": "Načítání...",
+    "remixing": "Připojování...",
+    "having-trouble": "Potíže s...",
+    "no-street": "Nebyla vybrána žádná ulice.",
+    "trouble-loading": "Máme potíže s načítáním Streetmixu.",
+    "slow-connection-1": "Streetmix se už nějakou dobu nemohl připojit k internetu.",
+    "slow-connection-2": "Možná budete chtít stránku znovu načíst a zkusit to znovu. Upozorňujeme, že můžete přijít o poslední změnu ulice. Omlouváme se!",
+    "no-connection": "Streetmix má potíže s připojením k internetu.",
+    "more-info": "Více informací"
+  },
+  "error": {
+    "button": {
+      "home": "Přejít na domovskou stránku",
+      "sign-in": "Znovu se přihlaste",
+      "reload": "Znovu načíst stránku",
+      "return": "Zpět na Streetmix",
+      "try-again": "Zkuste to znovu",
+      "view-example": "Zobrazit příklad ulice"
+    },
+    "page-not-found-title": "Stránka nenalezena.",
+    "page-not-found-description": "Ach jo. Žádná stránka s touto adresou neexistuje!",
+    "street-not-found-title": "Ulice nebyla nalezena.",
+    "street-not-found-description": "Ach jo. U tohoto odkazu není žádná ulice!",
+    "street-not-found-but-user-description": "U tohoto odkazu není žádná ulice! Ale můžete se podívat na jiné ulice od {user}",
+    "street-deleted-title": "Tato ulice byla vymazána.",
+    "street-deleted-description": "Ulice s tímto odkazem již není k dispozici, ale můžete se podívat na další ulice od {user}",
+    "sign-out-title": "Nyní jste odhlášeni.",
+    "reload-sign-out-title": "Odhlásili jste se v jiném okně.",
+    "gallery-street-failure-description": "Máme potíže s načítáním této ulice.",
+    "reload-sign-in-title": "Přihlásili jste se v jiném okně.",
+    "please-reload": "Znovu načtěte tuto stránku a vraťte se na Streetmix.",
+    "survey-finished": "Průzkum dokončen. Gratulujeme a děkujeme!",
+    "street-deleted-elsewhere-title": "Tato ulice byla jinde smazána.",
+    "street-deleted-elsewhere-description": "Tato ulice byla v jiném prohlížeči odstraněna.",
+    "auth-expired": "Automaticky jsme vás odhlásili z důvodu nečinnosti.",
+    "sign-in-again": "Přihlaste se znovu.",
+    "access-denied-title": "Nejste přihlášeni.",
+    "access-denied-description": "Zrušili jste proces přihlášení.",
+    "auth-api-problem-title": "Při přihlašování se vyskytl problém.",
+    "auth-api-problem-description": "Došlo k problému s ověřováním.",
+    "please-try-again": "Zkuste to prosím později nebo nám dejte vědět <email_link>e-mailem</email_link> či na <tweet_link>Twitteru</tweet_link>.",
+    "please-try-again-contact-us": "Zkuste to prosím později. Pokud stále potřebujete pomoc, <a>kontaktujte nás</a>.",
+    "unsupported-browser-title": "Streetmix ve vašem prohlížeči nefunguje.",
+    "unsupported-browser-description": "Za to se omlouváme. Možná budete chtít vyzkoušet <chrome_link>Chrome</chrome_link>, <firefox_link>Firefox</firefox_link>, <edge_link>Microsoft Edge</edge_link> nebo Safari.",
+    "unsupported-browser-internet-explorer": "Používáte Internet Explorer? <a>Zjistěte více</a>.",
+    "unsupported-browser-contact-us": "Pokud si myslíte, že by váš prohlížeč měl být podporován, <a>kontaktujte nás.",
+    "cannot-create-new-street-on-phone-title": "Streetmix funguje pouze na tabletech a stolních počítačích.",
+    "cannot-create-new-street-on-phone-description": "Pokud následujete další odkaz na konkrétní ulici, můžete si ji zobrazit v telefonu - zatím však nelze vytvářet nové ulice.",
+    "generic-error-title": "Něco se pokazilo.",
+    "generic-error-description": "Omlouváme se - něco se pokazilo.",
+    "error-code": "(Chyba {code}.)",
+    "need-help-link": "Potřebujete pomoc?"
+  },
+  "btn": {
+    "reload": "Znovu načíst",
+    "undo": "Zpět",
+    "redo": "Znovu",
+    "try-again": "Zkuste to znovu",
+    "cancel": "Zrušit",
+    "create": "Vytvořit novou ulici",
+    "copy": "Vytvořit kopii",
+    "remove": "Odebrat",
+    "close": "Zavřít",
+    "dismiss": "Odmítnout",
+    "okay": "OK",
+    "not-now": "Teď ne",
+    "save": "Uložit",
+    "edit": "Upravit"
+  },
+  "dialogs": {
+    "error": {
+      "heading": "Jejda!",
+      "text": "Stalo se něco nečekaného 😢. Chybu jsme zaznamenali, ale pokud si vzpomenete, co se stalo cestou sem, <a>řekněte nám o tom</a>. Může se také jednat o dočasný problém, proto to prosím zkuste ještě jednou."
+    },
+    "welcome": {
+      "heading": "Vítejte ve Streetmixu.",
+      "new": {
+        "intro": "Navrhněte, zremixujte a sdílejte svou ulici v sousedství. Přidejte stromy nebo cyklostezky, rozšiřte chodníky nebo jízdní pruhy, zjistěte, jak vaše rozhodnutí mohou ovlivnit vaši komunitu.",
+        "instruction": "Začněte přesunem některých segmentů.",
+        "instruct": "Začněte přesouváním některých segmentů pomocí {pointer}",
+        "instruct-pointer-finger": "váš prst",
+        "instruct-pointer-mouse": "vaší myši"
+      },
+      "existing": {
+        "intro": "To je {streetName} vytvořena od {creator}.",
+        "intro-without-creator": "Toto je {streetName}.",
+        "instruct": "Remixujte jej přesunutím některých segmentů nebo {startYourOwnStreet}.",
+        "instruct-start-own-street": "Založte si vlastní ulici"
+      }
+    },
+    "new-street": {
+      "heading": "Zde je vaše nová ulice.",
+      "default": "Začněte ukázkovou ulicí",
+      "empty": "Začněte s prázdnou ulicí",
+      "last": "Začněte s kopií poslední ulice"
+    },
+    "about": {
+      "heading": "O Streetmixu.",
+      "description": "Navrhněte, remixujte a sdílejte své ulice. Přidejte cyklostezky, rozšiřte chodníky nebo jízdní pruhy a zjistěte, jaký to může mít dopad na vaši obec.",
+      "team-heading": "Projektový tým a správci",
+      "partners": "Partneři",
+      "sponsors": "Sponzoři",
+      "sponsored-by": "Streetmix je velkoryse sponzorován:",
+      "donate-link": "Podpořte nás finančně",
+      "tos-link": "Podmínky služby",
+      "privacy-link": "Zásady ochrany osobních údajů",
+      "acknowledgements": "Poděkování",
+      "font-designed-by": "font {fontName} navržen od {fontAuthor}.",
+      "emoji-by": "Emoji od {author}.",
+      "icons-by": "Ikony od {author}.",
+      "license-label": "(<a>Licence</a>)"
+    },
+    "analytics": {
+      "export-csv": "Exportovat jako CSV",
+      "heading": "Analytika",
+      "street-summary": "Na vaší ulici se odhaduje průměrný provoz {averageTotal} lidí za hodinu a potenciálně až {potentialTotal} lidí za hodinu.",
+      "typical-lane-width": "Hodnoty kapacity jsou založeny na {laneWidth}-širokém jízdním pruhu.",
+      "segment-summary": "{average} — {potential} lidí/hodinu",
+      "segment-summary-single": "{amount} lidí/hodinu",
+      "source": "Zdroj",
+      "capacity-data-source": "Zdroj dat o kapacitě",
+      "toggle-visible": "Zobrazení počtu kapacit v popiscích segmentů",
+      "settings-notice": "Připojte se k chatu na DiscorduMajitelé ulic mohou tato nastavení změnit."
+    },
+    "save": {
+      "heading": "Uložit jako obrázek",
+      "option-labels": "Názvy a šířky segmentů",
+      "option-name": "Název ulice",
+      "option-sky": "Průhledná obloha",
+      "option-watermark": "Vodoznak",
+      "option-custom-scale": "Vlastní měřítko",
+      "option-custom-scale-description": "Stáhněte si obrázek až do velikosti 500 % původní velikosti.",
+      "loading": "Načítání...",
+      "save-button": "Uložit do počítače...",
+      "license": "Tento obrázek vytvořený ve Streetmix lze v rámci {licenseLink} licence použít kdekoli a k jakémukoli účelu.",
+      "error-preview": "Došlo k chybě při zobrazování náhledu obrázku.",
+      "error-unavailable": "Uložení do obrázku není v tomto prohlížeči k dispozici.",
+      "error-too-large": "Tento obrázek je příliš velký a nepodařilo se nám ho vytvořit. Zkuste prosím menší vlastní velikost.",
+      "preview-image-alt": "Náhled",
+      "print-size": "Velikost tisku",
+      "digital-size": "Digitální formát"
+    },
+    "geotag": {
+      "search": "Hledat umístění",
+      "clear-search": "Vymazat vyhledávání",
+      "zoom-in": "Přiblížit",
+      "zoom-out": "Oddálení",
+      "add-location": "Přidat umístění",
+      "confirm-location": "Potvrdit polohu",
+      "clear-location": "Vymazat umístění",
+      "unknown-location": "Neznámé místo",
+      "geotag-unavailable": "Služby geokódování nejsou v současné době k dispozici. Mapu si můžete prohlédnout, ale nebudete moci změnit polohu této ulice."
+    },
+    "donate": {
+      "heading": "Streetmix potřebuje vaši pomoc!",
+      "lede": "Streetmix je projekt podporovaný komunitou. Na rozdíl od jiných \"bezplatných\" služeb na internetu nezobrazujeme reklamy ani nevkládáme trackery, které zneužívají vaše soukromí. Místo toho jsme závislí na vaší podpoře, abychom Streetmix udrželi v chodu.",
+      "text": "Zvažte prosím, zda nás podpořit jednorázovým nebo pravidelným příspěvkem. Z vašeho příspěvku zaplatíme naše servery a cloudovou infrastrukturu, čímž podpoříme další neziskové organizace, advokační skupiny a studenty usilující o zlepšení našich ulic. Další příjmy budou investovány do dalšího vývoje nových funkcí. Naše výdaje jsou zcela transparentní, takže přesně vidíte, jak tým Streetmixu vaše příspěvky využívá.",
+      "button": "Darovat Streetmixu",
+      "cancel": "Ne, děkuji"
+    },
+    "sign-in": {
+      "heading": "Přihlášení / Registrace",
+      "description": "Uložte svůj první návrh nebo se přihlaste a získejte přístup ke svým minulým návrhům.",
+      "email-label": "E-mail",
+      "email-description": "Pošleme vám odkaz k přihlášení. Heslo není vyžadováno.",
+      "email-invalid": "Jejda! To nevypadá jako platná e-mailová adresa. Zkuste to prosím znovu.",
+      "social-heading": "nebo",
+      "button": {
+        "email": "Pokračovat e-mailem",
+        "twitter": "Pokračovat s Twitterem",
+        "google": "Pokračovat s Google",
+        "facebook": "Pokračovat s Facebookem"
+      },
+      "tos": "Kliknutím na jedno z těchto tlačítek souhlasím s {tosLink} a {privacyLink}.",
+      "tos-link-label": "podmínky služby",
+      "privacy-link-label": "zásady ochrany osobních údajů",
+      "loading-message": "Přihlašujeme vás...",
+      "sent-message-with-email": "Odeslali jsme e-mail na {email}. Postupujte prosím podle pokynů v něm a pokračujte v přihlašování!",
+      "email-unreceived": "Neobdrželi jste ji?",
+      "resend-email": "Znovu odeslat e-mail"
+    },
+    "whatsnew": {
+      "heading": "Co je nového ve Streetmixu?",
+      "english-only": "Tyto informace jsou uvedeny pouze v angličtině."
+    },
+    "newsletter": {
+      "heading": "Přihlaste se k odběru našeho zpravodaje",
+      "description": "Prostřednictvím našeho zpravodaje zasíláme příležitostné e-mailové aktualizace, a to jen několikrát ročně. Zaregistrujte se, aby vám nic neuniklo!",
+      "email-label": "Zadejte svůj e-mail",
+      "field-required-error": "Toto pole je povinné.",
+      "subscribe": "Přihlaste se k odběru",
+      "subscribe-pending": "Čekejte prosím...",
+      "ok-message": "<strong>Děkujeme! Jste téměř přihlášen k odběru.</strong> Poslali jsme vám e-mail pro potvrzení vaší adresy. Klikněte na ni a jste přihlášen!",
+      "error-message": "Uh oh! Něco se pokazilo v procesu přihlašování odběru. Může se jednat o dočasnou chybu systému. Zkuste to prosím později!"
+    }
+  },
+  "tools": {
+    "tooltip": "Přepínání nástrojů",
+    "skybox": {
+      "tooltip": "Editor prostředí",
+      "heading": "Prostředí"
+    }
+  },
+  "prompt": {
+    "new-street": "Název nové ulice:",
+    "delete-street": "Opravdu chcete trvale odstranit {streetName}? To nelze vrátit zpět.",
+    "new-width": "Nová šířka ulice (od {minWidth} do {maxWidth}):",
+    "segment-label": "Označení nového segmentu:"
+  },
+  "toast": {
+    "segment-deleted": "Segment byl odstraněn.",
+    "all-segments-deleted": "Všechny segmenty byly odstraněny.",
+    "no-undo": "Nic, co by se dalo vrátit zpět.",
+    "no-redo": "Není co opravovat.",
+    "no-save": "Ulice nemusíte ukládat ručně, Streetmix je ukládá automaticky!",
+    "remixing": "Nyní upravte čerstvě vytvořený duplikát původní ulice. Duplikát byl vložen do vaší galerie.",
+    "remixing-sign-in": "Nyní upravte čerstvě vytvořený duplikát původní ulice. Přihlaste se a založte si vlastní galerii ulic.",
+    "reloaded": "Vaše ulice byla znovu načtena ze serveru, protože byla upravena jinde."
+  },
+  "palette": {
+    "remove": "Přetažením sem odstraníte"
+  },
+  "width": {
+    "label": "šířka {width}",
+    "under": "({width} místa)",
+    "over": "({width} přes)",
+    "occupied": "Obsazená šířka",
+    "building": "Šířka mezi budovami",
+    "different": "Různá šířka...",
+    "units": "Jednotky",
+    "metric": "Metrický",
+    "imperial": "Americký imperiální"
+  },
+  "capacity": {
+    "ppl-per-hour": "{capacity} člověk/hod"
+  },
+  "datetime": {
+    "minutes-ago": "Před pár minutami",
+    "seconds-ago": "Před několika sekundami",
+    "yesterday": "Včera v {time}",
+    "today": "Dnes v {time}"
+  },
+  "key": {
+    "backspace": "Backspace",
+    "shift": "Shift",
+    "plus": "Plus",
+    "minus": "Mínus",
+    "left-arrow": "Levá šipka",
+    "right-arrow": "Pravá šipka"
+  },
+  "tooltip": {
+    "remove-segment": "Odebrat segment",
+    "delete-street": "Smazat ulici",
+    "segment-width": "Změna šířky segmentu",
+    "building-height": "Změnit počet podlaží",
+    "street-width": "Změnit šířku ulice",
+    "geotag": "Změnit polohu",
+    "increase-width": "Zvětšení šířky (pro větší přesnost podržte Shift)",
+    "decrease-width": "Zmenšení šířky (pro větší přesnost podržte Shift)",
+    "add-floor": "Přidat podlaží",
+    "remove-floor": "Odstranit podlaží",
+    "scroll-street-left": "Posun ulice doleva",
+    "scroll-street-right": "Posun ulice doprava",
+    "scroll-left": "Posun vlevo",
+    "scroll-right": "Posun vpravo"
+  },
+  "street": {
+    "default-name": "Ulice bez jména",
+    "rename": "Kliknutím přejmenujte"
+  },
+  "building": {
+    "floors-count": "{count, plural, one {# podlaží} few {# podlaží} many {# podlaží} other {# podlaží}}"
+  },
+  "segments": {
+    "warnings": {
+      "does-not-fit": "Tento úsek se do ulice nevejde.",
+      "not-wide": "Tento segment nemusí být dostatečně široký.",
+      "too-wide": "Tento segment může být příliš široký.",
+      "dangerous": "Tento úsek představuje nebezpečný stávající stav."
+    },
+    "learn-more": "Zjistěte více",
+    "unknown": {
+      "label": "Neznámý"
+    },
+    "description": {
+      "photo-credit": "Foto:"
+    },
+    "resize": {
+      "min": "Min",
+      "max": "Max"
+    }
+  },
+  "section": {
+    "empty": "Prázdné místo"
+  },
+  "gallery": {
+    "fail": "Nepodařilo se načíst galerii.",
+    "all": "Všechny ulice",
+    "twitter-link": "Profil na Twitteru",
+    "delete-street-tooltip": "Smazat ulici",
+    "street-count": "{count, plural, one {# ulice} few {# ulice} many {# ulic} other {# ulic}}",
+    "no-streets": "Zatím žádné ulice",
+    "thumbnail-error": "Miniatura obrázku není k dispozici."
+  },
+  "users": {
+    "anonymous": "Anonymní",
+    "byline": "od {user}",
+    "roles": {
+      "admin": "Správce",
+      "subscriber": "Člen Streetmix+"
+    }
+  },
+  "export": {
+    "watermark": "Vyrobeno s {streetmixWordmark}"
+  },
+  "meta": {
+    "description": "Navrhujte, remixujte a sdílejte své ulice v okolí - a to vše v prohlížeči! Přidejte stromy nebo cyklostezky, rozšiřte chodníky nebo dopravní pruhy, zjistěte, jak vaše rozhodnutí mohou ovlivnit vaši komunitu.",
+    "page-title": "{streetName} (od {author})"
+  },
+  "credits": {
+    "core-team-heading": "Tým projektu",
+    "original-team-heading": "Původní tým projektu",
+    "past-team-heading": "Minulí členové týmu",
+    "core-contributors": "Hlavní přispěvatelé",
+    "advisors": "Poradci",
+    "additional-illustrations": "Doplňující ilustrace",
+    "additional-code": "Dodatečný kód",
+    "additional-contributors": "Další přispěvatelé",
+    "special-thanks": "Zvláštní poděkování patří",
+    "translators": "Překladatelé"
+  },
+  "plus": {
+    "locked": {
+      "label": "Uzamčeno",
+      "soon": "Již brzy!",
+      "sub": "Upgradujte na Streetmix+ a používejte ho!",
+      "sub-edit": "Přejděte na Streetmix+ a upravujte",
+      "user": "Přihlaste se a používejte!",
+      "action": "Získejte Streetmix+"
+    },
+    "prompt": {
+      "text": "Tato funkce je k dispozici pouze uživatelům služby Streetmix+.",
+      "action": "Upgradujte a odemkněte"
+    },
+    "web-monetization": {
+      "thanks": "Děkujeme za vaši podporu!",
+      "not-signed-in": "Váš prohlížeč odesílá platby za zpeněžení webu. Přihlaste se a získejte přístup k výhodám Streetmix+!",
+      "signed-in": "Předplatné služby Web Monetization vám dává plný přístup k výhodám služby Streetmix+.",
+      "learn-more": "Zjistěte více"
+    }
+  },
+  "sentiment": {
+    "prompt": {
+      "intro": "<strong>Promiňte, že rušíme.</strong> Rádi bychom znali vaše názory na tuto ulici.",
+      "joyful": "Řekli byste, že tato ulice působí <em>radostně</em>?",
+      "choose-one": "(vyberte jednu)"
+    },
+    "answer": {
+      "rating-1": "Rozhodně ne",
+      "rating-2": "Ne příliš mnoho",
+      "rating-3": "Je to tak-tak",
+      "rating-4": "Trochu",
+      "rating-5": "Poměrně hodně"
+    },
+    "sign-in-prompt": "Přihlaste se a vyjádřete svůj názor.",
+    "about-link": "Proč se mi to zobrazuje?",
+    "about-text": "Tento průzkum nám pomáhá zjistit, jak se lidé cítí na ulicích.",
+    "thank-you": "Děkujeme!",
+    "about-header": "Chceme pochopit, jak se lidé cítí v ulicích",
+    "about-article": {
+      "paragraph-1": "Mnoho ulic navrhují stavební inženýři, ale my se domníváme, že by se při navrhování měl zohlednit pohled každého z nás. Ve spolupráci s <a>Aliancí pro novou městskou mobilitu</a> (NUMO) provádíme tento průzkum, který obsahuje jednu otázku.",
+      "paragraph-2": "Vaše odpovědi budeme analyzovat, abychom mohli odvodit, které vlastnosti ulice vyvolávají jaké pocity. V budoucnu plánujeme tyto poznatky zahrnout zpět do doporučení pro uživatele Streetmixu.",
+      "paragraph-3": "V každé ulici můžete hlasovat pouze jednou, ale můžete povzbudit ostatní, aby hlasovali sami, a to sdílením své ulice nebo náhodné ulice pomocí odkazu <a>https://streetmix.net/survey/."
+    },
+    "done": {
+      "response": "Odpověděl jste {score}.",
+      "vote-another": "Hlasujte o dalším!",
+      "really-done": "Hotovo!"
+    },
+    "comment": {
+      "prompt": "Řekněte nám proč:",
+      "example": "(například: \"Líbily se mi stromy.\")",
+      "submit": "Odeslat",
+      "thanks": "Rozumím!"
+    }
+  },
+  "i18n": {
+    "lang": {
+      "am": "Amharština",
+      "ar": "Arabština",
+      "ca": "Katalánština",
+      "cs": "Čeština",
+      "de": "Němčina",
+      "en": "Angličtina",
+      "en-gb": "Angličtina (Spojené království)",
+      "es": "Španělština",
+      "es-419": "Španělština (Latinská Amerika)",
+      "es-es": "Španělština (Španělsko)",
+      "es-mx": "Španělština (Mexiko)",
+      "fi": "Finština",
+      "fr": "Francouzština",
+      "id": "Indonéština",
+      "it": "Italština",
+      "ja": "Japonština",
+      "ko": "Korejština",
+      "nb-no": "Norština Bokmål",
+      "nl-nl": "Holandština (Nizozemsko)",
+      "pl": "Polština",
+      "pt-br": "portugalština (Brazílie)",
+      "ro-ro": "Rumunština",
+      "ru": "Ruština",
+      "sv": "Švédština",
+      "tr": "Turečtina",
+      "zh": "Čínština",
+      "zh-hans": "Zjednodušená čínština",
+      "zh-hant": "Tradiční čínština"
+    }
+  }
+}

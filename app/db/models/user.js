@@ -1,11 +1,12 @@
-'use strict'
+import roles from '../../data/user_roles.json' with { type: 'json' }
+
+const validUserRoles = Object.keys(roles)
+
 /*
 a little atypical setup here...'id' is usually a unique primary key value
 but in this app it is actually the username of the user
 */
-const validUserRoles = Object.keys(require('../../data/user_roles.json'))
-
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
@@ -18,6 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       auth0Id: {
         type: DataTypes.STRING,
         field: 'auth0_id'
+      },
+      displayName: {
+        type: DataTypes.STRING,
+        field: 'display_name',
+        validate: {
+          len: [0, 30]
+        }
       },
       email: { type: DataTypes.STRING, unique: true },
       identities: DataTypes.JSON,
@@ -38,7 +46,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       profileImageUrl: {
-        type: DataTypes.STRING(1024),
+        // The maximum URL length should be "under 2000 characters"
+        // https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
+        // In practice, URLs from various login methods are under 1024
+        // characters, but a rare handful of googleusercontent.com URLs are
+        // just slightly longer. Bumping to 2048 characters should prevent
+        // SQL insert errors that block people from signing in.
+        type: DataTypes.STRING(2048),
         field: 'profile_image_url'
       },
       flags: DataTypes.JSON,

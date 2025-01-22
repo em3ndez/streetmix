@@ -1,6 +1,6 @@
-const jwt = require('express-jwt')
-const jwksRsa = require('jwks-rsa')
-const logger = require('../lib/logger.js')()
+import { expressjwt } from 'express-jwt'
+import jwksRsa from 'jwks-rsa'
+import logger from './lib/logger.js'
 
 const secret = jwksRsa.expressJwtSecret({
   cache: true,
@@ -9,7 +9,7 @@ const secret = jwksRsa.expressJwtSecret({
   jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
 })
 
-const jwtCheck = jwt({
+const jwtCheck = expressjwt({
   algorithms: ['RS256'],
   secret,
   issuer: `https://${process.env.AUTH0_DOMAIN}/`,
@@ -23,28 +23,20 @@ const jwtCheck = jwt({
   }
 })
 
-const wrappedCheck = (req, res, next) => {
+export default function wrappedCheck (req, res, next) {
   const handleErrorNext = (err) => {
-    if (err) {
-      if (
-        err.name === 'UnauthorizedError' &&
-        err.inner.name === 'TokenExpiredError' &&
-        req.cookies.login_token
-      ) {
-        if (req.method === 'POST' || req.method === 'PUT') {
-          logger.error(
-            `Expired token ${req.cookies.login_token} sent for authenticated route - ${req.method} ${req.url}`
-          )
-          logger.error(err)
-        }
-
-        return next()
-      }
+    if (
+      err?.name === 'UnauthorizedError' &&
+      err?.inner.name === 'TokenExpiredError' &&
+      (req.method === 'POST' || req.method === 'PUT')
+    ) {
+      logger.error(
+        `Expired token sent for authenticated route - ${req.method} ${req.url}`
+      )
+      logger.error(err)
     }
     next(err)
   }
 
-  jwtCheck(req, res, handleErrorNext)
+  return jwtCheck(req, res, handleErrorNext)
 }
-
-module.exports = wrappedCheck

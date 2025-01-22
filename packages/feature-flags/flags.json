@@ -1,0 +1,124 @@
+{
+  "COLOR_MODE_TOGGLE": {
+    "label": "UI — Color mode (e.g. dark mode) themes",
+    "defaultValue": false
+  },
+  "GEOTAG": {
+    "label": "UI — Geotagging",
+    "defaultValue": true
+  },
+  "ANALYTICS": {
+    "label": "UI — Street analytics",
+    "defaultValue": true
+  },
+  "EDIT_STREET_WIDTH": {
+    "label": "UI — Edit street width",
+    "defaultValue": true
+  },
+  "EDIT_STREET_NAME": {
+    "label": "UI — Edit street name",
+    "defaultValue": true
+  },
+  "EDIT_BUILDINGS_LEFT": {
+    "label": "UI — Edit left-side buildings",
+    "defaultValue": true
+  },
+  "EDIT_BUILDINGS_RIGHT": {
+    "label": "UI — Edit right-side buildings",
+    "defaultValue": true
+  },
+  "SENTIMENT_SURVEY": {
+    "label": "Sentiment surveys",
+    "defaultValue": false
+  },
+  "SKY_ANIMATED_CLOUDS": {
+    "label": "Sky — animated clouds",
+    "defaultValue": false
+  },
+  "SAVE_UNDO": {
+    "label": "Save undo data to server",
+    "defaultValue": false,
+    "enabled": false
+  },
+  "INFO_BUBBLE_HOVER_POLYGON": {
+    "label": "Info bubble — [debug] show Tognazzini zone",
+    "defaultValue": false
+  },
+  "ELEVATION_CONTROLS_UNLOCKED": {
+    "label": "Info bubble — elevation property controls (unlocked)",
+    "defaultValue": false
+  },
+  "TOAST_LIFE_BAR": {
+    "label": "Toasts — [debug] show life bar",
+    "defaultValue": false
+  },
+  "LOCALES_LEVEL_1": {
+    "label": "Locales — level 1+ (in progress)",
+    "defaultValue": false
+  },
+  "LOCALES_LEVEL_2": {
+    "label": "Locales — level 2+ (complete, in testing)",
+    "defaultValue": false
+  },
+  "LOCALES_LEVEL_3": {
+    "label": "Locales — level 3 (complete, final)",
+    "defaultValue": true
+  },
+  "SEGMENT_3D_PARKING": {
+    "label": "Segment — 3d angled parking",
+    "defaultValue": false,
+    "enabled": false
+  },
+  "SEGMENT_CROSSWALK": {
+    "label": "Segment — crosswalk",
+    "defaultValue": false
+  },
+  "SEGMENT_DRAINAGE_CHANNEL_UNLOCKED": {
+    "label": "Segment — drainage channel (unlocked)",
+    "defaultValue": false
+  },
+  "SEGMENT_INCEPTION_TRAIN": {
+    "label": "Segment — the train from “Inception”",
+    "defaultValue": false
+  },
+  "VARIANT_MIXED_DRIVE_LANES_1": {
+    "label": "Variant — mixed-traffic drive lane (with bus) (unlocked)",
+    "defaultValue": false
+  },
+  "VARIANT_MIXED_DRIVE_LANES_2": {
+    "label": "Variant — mixed-traffic drive lane (with bike) (unlocked)",
+    "defaultValue": false
+  },
+  "VARIANT_TWOWAY_BIKES": {
+    "label": "Variant — two-way bike lanes (enabled)",
+    "defaultValue": true
+  },
+  "VARIANT_TWOWAY_BIKES_UNLOCKED": {
+    "label": "Variant — two-way bike lanes (unlocked)",
+    "defaultValue": false
+  },
+  "DEBUG_SEGMENT_CANVAS_RECTANGLES": {
+    "label": "Segment — [debug] canvas rectangles",
+    "defaultValue": false
+  },
+  "SAVE_AS_IMAGE_CUSTOM_DPI": {
+    "label": "Save images at custom scale",
+    "defaultValue": false
+  },
+  "ALWAYS_DISPLAY_WHATS_NEW": {
+    "label": "Always display the What’s New dialog",
+    "defaultValue": false
+  },
+  "MEMBER_UPGRADE": {
+    "label": "Integrated membership billing",
+    "defaultValue": false
+  },
+  "STREETMETER_EXPORT": {
+    "label": "Streetmeter export",
+    "defaultValue": false
+  },
+  "SILLY_CLOWNS": {
+    "label": "Silly clowns",
+    "defaultValue": false
+  }
+}

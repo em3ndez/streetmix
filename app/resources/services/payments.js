@@ -1,38 +1,42 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const User = require('../../db/models/user.js')
-const roles = require('../../data/user_roles.json')
-const logger = require('../../../lib/logger.js')()
+import * as fs from 'node:fs/promises'
+import User from '../../db/models/user.js'
+import logger from '../../lib/logger.js'
+
+const roles = JSON.parse(
+  await fs.readFile(new URL('../../data/user_roles.json', import.meta.url))
+)
+
 const tier1PlanId = process.env.STRIPE_TIER1_PLAN_ID
 
 const planMap = {
   [tier1PlanId]: roles.SUBSCRIBER_1
 }
 
-exports.post = async (req, res) => {
+export async function post (req, res) {
   let userId
   let subscription
   let customer
   try {
     userId = req.body.userId
     logger.info(`submitting payment for ${userId}`)
-    const {
-      token: { email, id }
-    } = req.body
+    // const {
+    //   token: { email, id }
+    // } = req.body
 
-    customer = await stripe.customers.create({
-      email,
-      source: id,
-      description: `Subscriber for ${userId}`
-    })
+    // customer = await stripe.customers.create({
+    //   email,
+    //   source: id,
+    //   description: `Subscriber for ${userId}`
+    // })
 
-    subscription = await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [
-        {
-          plan: tier1PlanId
-        }
-      ]
-    })
+    // subscription = await stripe.subscriptions.create({
+    //   customer: customer.id,
+    //   items: [
+    //     {
+    //       plan: tier1PlanId
+    //     }
+    //   ]
+    // })
   } catch (err) {
     logger.error(err)
     res
@@ -54,6 +58,7 @@ exports.post = async (req, res) => {
 
   if (!user) {
     res.status(404).json({ status: 404, msg: 'Could not find user data.' })
+    return
   }
 
   try {
@@ -78,8 +83,6 @@ exports.post = async (req, res) => {
       logger.info({ upgradedUser, subscription }, 'added user subscription')
       res.status(200).json({ user: upgradedUser, subscription })
     })
-
-    return
   } catch (err) {
     logger.error(err)
     res

@@ -1,11 +1,15 @@
-const cloudinary = require('cloudinary')
-const { User, Street } = require('../../db/models')
-const logger = require('../../../lib/logger.js')()
-const { SAVE_THUMBNAIL_EVENTS } = require('../../../lib/util.js')
+import axios from 'axios'
+import cloudinary from 'cloudinary'
+import { runTestCanvas } from '@streetmix/export-image'
 
+import models from '../../db/models/index.js'
+import logger from '../../lib/logger.js'
+import { SAVE_THUMBNAIL_EVENTS } from '../../lib/util.js'
+
+const { User, Street } = models
 const ALLOW_ANON_STREET_THUMBNAILS = false
 
-exports.post = async function (req, res) {
+export async function post (req, res) {
   let json
 
   // The request payload is a stringified JSON due to the data URL for the street thumbnail being too large.
@@ -38,6 +42,7 @@ exports.post = async function (req, res) {
   } catch (error) {
     logger.error(error)
     res.status(500).json({ status: 500, msg: 'Error finding street.' })
+    return
   }
 
   if (!street) {
@@ -52,7 +57,7 @@ exports.post = async function (req, res) {
   const details = {
     public_id: publicId,
     street_type: streetType,
-    creatorId: creatorId,
+    creatorId,
     edit_count: editCount
   }
 
@@ -135,7 +140,7 @@ exports.post = async function (req, res) {
   }
 
   const handleFindStreetWithCreator = async function (street) {
-    if (!(req.user && req.user.sub)) {
+    if (!req.auth?.sub) {
       res.status(401).json({
         status: 401,
         msg: 'Sign in to upload street thumnail for owned street.'
@@ -146,7 +151,7 @@ exports.post = async function (req, res) {
     let user
 
     try {
-      user = await User.findOne({ where: { auth0_id: req.user.sub } })
+      user = await User.findOne({ where: { auth0_id: req.auth.sub } })
     } catch (error) {
       logger.error(error)
       res.status(500).json({ status: 500, msg: 'Error finding user.' })
@@ -197,24 +202,25 @@ exports.post = async function (req, res) {
   }
 }
 
-exports.delete = async function (req, res) {
+export async function del (req, res) {
   if (!req.params.street_id) {
     res.status(400).json({ status: 400, msg: 'Please provide street ID.' })
     return
   }
 
   // 1) Verify user is logged in.
-  if (!(req.user && req.user.sub)) {
+  if (!req.auth?.sub) {
     res.status(401).json({ status: 401, msg: 'Please provide user ID.' })
     return
   }
 
   let user
   try {
-    user = await User.findOne({ where: { auth0_id: req.user.sub } })
+    user = await User.findOne({ where: { auth0_id: req.auth.sub } })
   } catch (error) {
     logger.error(error)
     res.status(500).json({ status: 500, msg: 'Error finding user.' })
+    return
   }
 
   if (!user) {
@@ -223,7 +229,7 @@ exports.delete = async function (req, res) {
   }
 
   // Is requesting user logged in?
-  if (!req.user || !req.user.sub || req.user.sub !== user.auth0Id) {
+  if (!req.auth?.sub || req.auth.sub !== user.auth0Id) {
     res.status(401).end()
     return
   }
@@ -265,37 +271,75 @@ exports.delete = async function (req, res) {
   })
 }
 
-exports.get = async function (req, res) {
+export async function get (req, res) {
   if (!req.params.street_id) {
     res.status(400).json({ status: 400, msg: 'Please provide a street id.' })
     return
   }
 
+  // 2) Check that street exists.
+  const streetId = req.params.street_id
+  let street
+
+  try {
+    // eslint-disable-next-line
+    street = await Street.findOne({ where: { id: streetId } })
+  } catch (error) {
+    logger.error(error)
+    res.status(500).json({ status: 500, msg: 'Error finding street.' })
+  }
+
   let resource
 
   try {
-    const publicId = `${process.env.NODE_ENV}/street_thumbnails/${req.params.street_id}`
+    const publicId = `${process.env.NODE_ENV}/street_thumbnails/${streetId}`
     resource = await cloudinary.v2.api.resource(publicId)
   } catch (error) {
     if (error?.error?.http_code === 404) {
-      res
-        .status(404)
-        .json({ status: 404, msg: 'Could not find street thumbnail.' })
+      // While canvas backend is in development, let's run and return this
+      // for streets that aren't currently existing on Cloudinary.
+      // Also only enable if query param `experimental=1` so that this is
+      // only run on purpose
+      // Options are passed via query params
+      if (req.query.experimental === '1') {
+        const image = await runTestCanvas(street.dataValues, req.query)
+
+        res.set('Content-Type', 'image/png')
+        res.status(200).send(image)
+      } else {
+        res
+          .status(404)
+          .json({ status: 404, msg: 'Could not find street image.' })
+      }
     } else {
       logger.error(error)
-      res
-        .status(500)
-        .json({ status: 500, msg: 'Error finding street thumbnail.' })
+      res.status(500).json({ status: 500, msg: 'Error finding street image.' })
     }
+
     return
   }
 
+  // TODO: is this a 404 or a 500 if cloudinary API returns nothing
   if (!resource) {
-    res
-      .status(404)
-      .json({ status: 404, msg: 'Could not find street thumbnail.' })
+    res.status(404).json({
+      status: 404,
+      msg: 'Did not receive any information from upstream provider.'
+    })
     return
   }
 
-  res.status(200).json(resource)
+  // Fetch image from cloudinary and send to client
+  try {
+    res.set('Content-Type', 'image/png')
+    axios({
+      method: 'get',
+      url: resource.url,
+      responseType: 'stream'
+    }).then((response) => {
+      response.data.pipe(res)
+    })
+  } catch (err) {
+    logger.error(err)
+    res.status(500).json({ status: 500, msg: 'Could not fetch street image.' })
+  }
 }

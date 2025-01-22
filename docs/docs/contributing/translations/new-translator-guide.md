@@ -32,19 +32,11 @@ Sometimes, there are updates or additions to the original, or _source_, English 
 
 ## Seeing translations live
 
-The most important part about translating is seeing your hard work in Transifex show up live in the application! You can do this by visiting the staging server at <http://streetmix-staging.herokuapp.com> and toggling on the locales feature:
+The most important part about translating is seeing your hard work in Transifex show up live in the application! You can do this by visiting [the staging server](http://streetmix-staging.herokuapp.com) and logging in to view or create your user account there. (Because it's a staging server, it uses a separate database and different user accounts from the main instance.)
 
-Once at the staging server, you can toggle on your language by doing the following:
+Let someone on the team know your user account name on the staging server so that we can give you "translator" role.
 
-- **Press "shift-f"** (make sure the app is focused and no text box or developer tool window is selected). This displays a dialog box with some checkboxes. _(Note that this is just intended for testing and viewing your work, so please don't share it publicly.)_ Choose which box to check based on the locale descriptions below.
-
-We have 3 levels of locales (languages). Levels are lower bounds and inclusive. In other words, level 1 means all locales 1 or higher are enabled. You cannot only turn on level 1 but not level 2 for example. Based on which languages you want to see, check one of the following boxes:
-
-- **Level 1+ (in progress)**: Incomplete or in progress, available for translators to test, but not for end-users.
-- **Level 2+ (complete, in testing)**: Complete or nearly complete, available for quality assurance & feedback with small group of users.
-- **Level 3 (complete, final)**: Finished and shipped to production, for public use.
-
-Once you've checked the appropriate locale box, you can change to your language via the **"Settings" dropdown menu** in the upper right.
+Once you have the "translator" role on the staging server, all incomplete or in-progress languages are available for translators to test! You can view them in the **"Settings" dropdown menu** in the upper right.
 
 ![image](_images/b3e8306-Settings_bar.png)
 
@@ -76,7 +68,7 @@ Before you get started, here are some terms that you should get familiar with.
 
 ### Join the team
 
-Start here: <https://www.transifex.com/streetmix/streetmix/>
+Start by going our [Transifex project page](https://www.transifex.com/streetmix/streetmix/).
 
 If you are not logged in or don't have an account yet, you will need to click the "Help Translate Streetmix" button and you will be prompted to log in or create an account.
 
@@ -88,7 +80,7 @@ The Transifex interface can take some getting used to. If something doesn't matc
 
 :::
 
-Once you create your account, you may have to confirm your email address. Then, navigate back to <https://www.transifex.com/streetmix/streetmix/> and you should see a blue button that says "Join Team".
+Once you create your account, you may have to confirm your email address. Then, navigate back to the [Transifex project page](https://www.transifex.com/streetmix/streetmix/) and you should see a blue button that says "Join Team".
 
 ![image](_images/4769b7f-2-join-team.png)
 
@@ -102,7 +94,7 @@ After requesting to join a language, you should receive a confirmation message. 
 
 ### Getting started
 
-Once your request has been approved, you should see the following when you go back to [Streetmix's Transifex homepage](https://www.transifex.com/streetmix/streetmix/). From here, select _Languages_.
+Once your request has been approved, you should see the following when you go back to the [Transifex project page](https://www.transifex.com/streetmix/streetmix/). From here, select _Languages_.
 
 ![image](_images/3e4f5bc-5-success-dashboard.png)
 
@@ -162,6 +154,6 @@ If there is a difficult or confusing string, please add a comment on Transifex. 
 
 For issues that are larger than one specific string, please bring this up to the Streetmix community. There are two ways you can do this:
 
-1. Tell us on the Streetmix Discord in the _#translations_ channel. You can join our Discord server here: <https://strt.mx/discord>.
+1. Join our [Discord server](https://strt.mx/discord) and post in the _#translations_ channel.
 
-2. Create an issue on GitHub ([learn more](https://help.github.com/articles/creating-an-issue/)). Our issues are located here: <https://github.com/streetmix/streetmix/issues/new>
+2. [Create an issue on GitHub](https://github.com/streetmix/streetmix/issues/new).

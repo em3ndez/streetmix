@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`IdentityMenu > renders 1`] = `
+<DocumentFragment>
+  <div
+    class="menu identity-menu"
+  >
+    <div
+      class="identity-section"
+    >
+      <div
+        class="identity-avatar-name"
+      >
+        <div
+          class="identity-avatar-name-left"
+        >
+          <span
+            class="avatar"
+          >
+            <img
+              alt="foo"
+            />
+          </span>
+        </div>
+        <div
+          class="identity-avatar-name-right"
+        >
+          <div
+            class="identity-avatar-display-name"
+          >
+            bar
+          </div>
+          <div
+            class="menu-item-subtext"
+          >
+            foo
+          </div>
+        </div>
+      </div>
+      <div
+        class="identity-roles"
+      >
+        <ul />
+      </div>
+    </div>
+    <div
+      class="menu-separator"
+    />
+    <a
+      href="/foo"
+    >
+      <svg
+        class="menu-item-icon"
+        data-icon="star"
+        data-icon-source="test"
+      />
+      My streets
+    </a>
+    <a>
+      <svg
+        class="menu-item-icon"
+        data-icon="settings"
+        data-icon-source="test"
+      />
+      Settings
+    </a>
+    <div
+      class="menu-separator"
+    />
+    <a
+      class="menu-item menu-sign-out"
+    >
+      <svg
+        class="menu-item-icon"
+        data-icon="sign-out"
+        data-icon-source="test"
+      />
+      Sign out
+    </a>
+  </div>
+</DocumentFragment>
+`;
